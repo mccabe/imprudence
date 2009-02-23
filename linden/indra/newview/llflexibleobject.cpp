@@ -101,14 +101,6 @@ void LLVolumeImplFlexible::onShift(const LLVector3 &shift_vector)
 	}
 }
 
-//-----------------------------------------------------------------------------------------------
-void LLVolumeImplFlexible::setParentPositionAndRotationDirectly( LLVector3 p, LLQuaternion r )
-{
-	mParentPosition = p;
-	mParentRotation = r;
-
-}//-----------------------------------------------------------------------------------------------------
-
 void LLVolumeImplFlexible::remapSections(LLFlexibleObjectSection *source, S32 source_sections,
 										 LLFlexibleObjectSection *dest, S32 dest_sections)
 {	
@@ -206,6 +198,13 @@ void LLVolumeImplFlexible::setAttributesOfAllSections(LLVector3* inScale)
 		top_scale = params.getEndScale();
 		begin_rot = F_PI * params.getTwistBegin();
 		end_rot = F_PI * params.getTwist();
+	}
+
+	// sculpts have no notion of taper:
+	if (mVO->isSculpted())
+	{
+		bottom_scale = LLVector2(1.f, 1.f);
+		top_scale = LLVector2(1.f, 1.f);
 	}
 
 	if (!mVO->mDrawable)
@@ -346,17 +345,6 @@ BOOL LLVolumeImplFlexible::doIdleUpdate(LLAgent &agent, LLWorld &world, const F6
 	}
 	
 	return force_update;
-}
-
-inline S32 log2(S32 x)
-{
-	S32 ret = 0;
-	while (x > 1)
-	{
-		++ret;
-		x >>= 1;
-	}
-	return ret;
 }
 
 void LLVolumeImplFlexible::doFlexibleUpdate()
@@ -642,8 +630,16 @@ void LLVolumeImplFlexible::preRebuild()
 
 void LLVolumeImplFlexible::doFlexibleRebuild()
 {
-	LLVolume* volume = mVO->getVolume();
-	volume->regen();
+	if(((LLVOVolume*)mVO)->isSculpted())
+    {
+        LLVOVolume* vovol = (LLVOVolume*)mVO;
+        vovol->sculpt();
+    }
+    else
+    {
+        LLVolume* volume = mVO->getVolume();
+        volume->regen();
+    }
 	
 	mUpdated = TRUE;
 }
@@ -728,51 +724,7 @@ BOOL LLVolumeImplFlexible::doUpdateGeometry(LLDrawable *drawable)
 	return TRUE;
 }
 
-//----------------------------------------------------------------------------------
-void LLVolumeImplFlexible::setCollisionSphere( LLVector3 p, F32 r )
-{
-	mCollisionSpherePosition = p;
-	mCollisionSphereRadius   = r;
-
-}//------------------------------------------------------------------
-
-
-//----------------------------------------------------------------------------------
-void LLVolumeImplFlexible::setUsingCollisionSphere( bool u )
-{
-}//------------------------------------------------------------------
-
-
-//----------------------------------------------------------------------------------
-void LLVolumeImplFlexible::setRenderingCollisionSphere( bool r )
-{
-}//------------------------------------------------------------------
-
 //------------------------------------------------------------------
-LLVector3 LLVolumeImplFlexible::getEndPosition()
-{
-	S32 num_sections = 1 << mAttributes->getSimulateLOD();
-	return mSection[ num_sections ].mPosition;
-
-}//------------------------------------------------------------------
-
-
-//------------------------------------------------------------------
-LLVector3 LLVolumeImplFlexible::getNodePosition( int nodeIndex )
-{
-	S32 num_sections = 1 << mAttributes->getSimulateLOD();
-	if ( nodeIndex > num_sections - 1 )
-	{
-		nodeIndex = num_sections - 1;
-	}
-	else if ( nodeIndex < 0 ) 
-	{
-		nodeIndex = 0;
-	}
-
-	return mSection[ nodeIndex ].mPosition;
-
-}//------------------------------------------------------------------
 
 LLVector3 LLVolumeImplFlexible::getPivotPosition() const
 {
@@ -789,15 +741,6 @@ LLVector3 LLVolumeImplFlexible::getAnchorPosition() const
 	return BasePosition - (anchorScale.mV[VZ]/2 * anchorDirectionRotated);
 
 }//------------------------------------------------------------------
-
-
-//------------------------------------------------------------------
-LLQuaternion LLVolumeImplFlexible::getEndRotation()
-{
-	return mLastSegmentRotation;
-
-}//------------------------------------------------------------------
-
 
 void LLVolumeImplFlexible::updateRelativeXform()
 {

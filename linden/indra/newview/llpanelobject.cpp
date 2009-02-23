@@ -1411,7 +1411,7 @@ void LLPanelObject::getVolumeParams(LLVolumeParams& volume_params)
 	}
 
 
-	if (path == LL_PCODE_PATH_LINE)
+	if ((path == LL_PCODE_PATH_LINE) || (selected_type == MI_SCULPT))
 	{
 		LLVOVolume *volobjp = (LLVOVolume *)(LLViewerObject*)(mObject);
 		if (volobjp->isFlexible())

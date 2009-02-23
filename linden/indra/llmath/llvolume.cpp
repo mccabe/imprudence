@@ -2003,7 +2003,12 @@ void LLVolume::sculptGeneratePlaceholder()
 }
 
 // create the vertices from the map
-void LLVolume::sculptGenerateMapVertices(U16 sculpt_width, U16 sculpt_height, S8 sculpt_components, const U8* sculpt_data, U8 sculpt_type)
+void LLVolume::sculptGenerateMapVertices(U16 sculpt_width,
+										 U16 sculpt_height,
+										 S8 sculpt_components,
+										 const U8* sculpt_data,
+										 U8 sculpt_type,
+										 BOOL is_flexible)
 {
 	U8 sculpt_stitching = sculpt_type & LL_SCULPT_TYPE_MASK;
 	BOOL sculpt_invert = sculpt_type & LL_SCULPT_FLAG_INVERT;
@@ -2086,6 +2091,41 @@ void LLVolume::sculptGenerateMapVertices(U16 sculpt_width, U16 sculpt_height, S8
 			{
 				pt.mPos.mV[VX] *= -1.f;
 			}
+
+             if(is_flexible)
+            {
+				// apply path deformation to position
+				LLQuaternion rotation;
+				LLVector3 position;
+				LLVector2 scale;
+
+				F32 path_dist = pt.mPos[VZ] + 0.5;  // in interval [0..1]
+
+				S32 p1 = (sizeS-1) * path_dist;
+				if (p1 == (sizeS-1))
+				{
+					rotation = mPathp->mPath[p1].mRot;
+					position = mPathp->mPath[p1].mPos;
+				}
+				else
+				{
+					// point is somewhere between p1 and p1+1.  so lerp.
+					
+					S32 p2 = p1+1;
+					F32 remainder = path_dist * (sizeS-1) - p1;
+					rotation = lerp(remainder, mPathp->mPath[p1].mRot, mPathp->mPath[p2].mRot);
+					position = lerp(mPathp->mPath[p1].mPos, mPathp->mPath[p2].mPos, remainder);
+				}
+				
+				// scale doesn't vary (sculpties ignore taper)
+				scale = mPathp->mPath[0].mScale;
+				
+				pt.mPos[VZ] = 0;
+				pt.mPos[VX] = pt.mPos[VX] * scale.mV[VX];
+				pt.mPos[VY] = pt.mPos[VY] * scale.mV[VY];
+                pt.mPos = pt.mPos * rotation;
+                pt.mPos += position;
+            }
 		}
 		
 		line += sizeT;
@@ -2145,7 +2185,13 @@ void sculpt_calc_mesh_resolution(U16 width, U16 height, U8 type, F32 detail, S32
 }
 
 // sculpt replaces generate() for sculpted surfaces
-void LLVolume::sculpt(U16 sculpt_width, U16 sculpt_height, S8 sculpt_components, const U8* sculpt_data, S32 sculpt_level)
+void LLVolume::sculpt(U16 sculpt_width,
+					  U16 sculpt_height,
+					  S8 sculpt_components,
+					  const U8* sculpt_data,
+					  S32 sculpt_level,
+					  BOOL is_flexible)
+	
 {
 	LLMemType m1(LLMemType::MTYPE_VOLUME);
     U8 sculpt_type = mParams.getSculptType();
@@ -2189,7 +2235,7 @@ void LLVolume::sculpt(U16 sculpt_width, U16 sculpt_height, S8 sculpt_components,
 	}	
 	else
 	{
-		sculptGenerateMapVertices(sculpt_width, sculpt_height, sculpt_components, sculpt_data, sculpt_type);
+		sculptGenerateMapVertices(sculpt_width, sculpt_height, sculpt_components, sculpt_data, sculpt_type, is_flexible);
 	}
 
 	for (S32 i = 0; i < (S32)mProfilep->mFaces.size(); i++)

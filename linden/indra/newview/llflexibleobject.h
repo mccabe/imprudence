@@ -100,15 +100,6 @@ class LLVolumeImplFlexible : public LLVolumeInterface
 		void doFlexibleRebuild(); // Called to rebuild the geometry
 		void preRebuild();
 
-		//void				setAttributes( LLFlexibleObjectData );
-		void				setParentPositionAndRotationDirectly( LLVector3 p, LLQuaternion r );
-		void				setUsingCollisionSphere( bool u );
-		void				setCollisionSphere( LLVector3 position, F32 radius );
-		void				setRenderingCollisionSphere( bool r);
-
-		LLVector3			getEndPosition();
-		LLQuaternion		getEndRotation();
-		LLVector3			getNodePosition( int nodeIndex );
 		LLVector3			getAnchorPosition() const;
 
 	private:
@@ -131,8 +122,6 @@ class LLVolumeImplFlexible : public LLVolumeInterface
 		S32							mSimulateRes;
 		S32							mRenderRes;
 		U32							mFrameNum;
-		LLVector3					mCollisionSpherePosition;
-		F32							mCollisionSphereRadius;
 		U32							mID;
 
 		//--------------------------------------
