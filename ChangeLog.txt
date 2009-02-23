@@ -1,3 +1,11 @@
+2009-02-22  McCabe Maxsted  <hakushakukun@gmail.com>
+
+	Applied Qarl's flexisculpt patch from http://jira.secondlife.com/browse/VWR-9203
+
+	* linden/indra/llcommon/llversionviewer.h:
+	Changed test version to flexi-sculpt-test.
+
+
 2009-02-17  McCabe Maxsted  <hakushakukun@gmail.com>
 
 	* linden/indra/llmessage/llpumpio.cpp:
