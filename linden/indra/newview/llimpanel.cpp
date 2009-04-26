@@ -501,7 +501,13 @@ void LLVoiceChannel::deactivate()
 	if (callStarted())
 	{
 		setState(STATE_HUNG_UP);
+		// mute the microphone if required when returning to the proximal channel
+		if (gSavedSettings.getBOOL("AutoDisengageMic") && sCurrentVoiceChannel == this)
+		{
+			gSavedSettings.setBOOL("PTTCurrentlyEnabled", true);
+		}
 	}
+
 	if (sCurrentVoiceChannel == this)
 	{
 		// default channel is proximal channel
@@ -520,11 +526,14 @@ void LLVoiceChannel::activate()
 	// deactivate old channel and mark ourselves as the active one
 	if (sCurrentVoiceChannel != this)
 	{
-		if (sCurrentVoiceChannel)
-		{
-			sCurrentVoiceChannel->deactivate();
-		}
+		// mark as current before deactivating the old channel to prevent
+		// activating the proximal channel between IM calls
+		LLVoiceChannel* old_channel = sCurrentVoiceChannel;
 		sCurrentVoiceChannel = this;
+		if (old_channel)
+		{
+			old_channel->deactivate();
+		}
 	}
 
 	if (mState == STATE_NO_CHANNEL_INFO)

@@ -2,6 +2,20 @@
 =-                        1.2.0                           -=
 =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
+2009-04-26  McCabe Maxsted  <hakushakukun@gmail.com>
+
+	* linden/indra/newview/app_settings/settings.xml: 
+	Applied Aimee's voice autodisengage patch.
+	* linden/indra/newview/llimpanel.cpp: 
+	Ditto.
+	* linden/indra/newview/llprefsvoice.cpp: 
+	Ditto.
+	* linden/indra/newview/llprefsvoice.h: 
+	Ditto.
+	* linden/indra/newview/skins/default/xui/en-us/panel_preferences_voice.xml: 
+	Ditto.
+	
+
 2009-04-22  McCabe Maxsted  <hakushakukun@gmail.com>
 
 	Started 1.2.0 branch.

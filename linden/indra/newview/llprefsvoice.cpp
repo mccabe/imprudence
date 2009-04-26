@@ -96,6 +96,7 @@ void LLPrefsVoiceLogic::init()
 	mEnableVoice = gSavedSettings.getBOOL("EnableVoiceChat");
 
 	mVoiceCallsFriendsOnly = gSavedSettings.getBOOL("VoiceCallsFriendsOnly");
+	mAutoDisengageMic = gSavedSettings.getBOOL("AutoDisengageMic");
 	mModifier = gSavedSettings.getString("PushToTalkButton");
 	mPushToTalkToggle = gSavedSettings.getBOOL("PushToTalkToggle");
 	mEarLocation = gSavedSettings.getS32("VoiceEarLocation");
@@ -128,6 +129,7 @@ void LLPrefsVoiceLogic::refresh()
 	mPanel->childSetEnabled("push_to_talk_check", enable);
 	mPanel->childSetEnabled("push_to_talk_label", enable);
 	mPanel->childSetEnabled("voice_call_friends_only_check", enable);
+	mPanel->childSetEnabled("auto_disengage_mic_check", enable);
 	mPanel->childSetEnabled("push_to_talk_toggle_check", enable);
 	mPanel->childSetEnabled("ear_location", enable);
 	mPanel->childSetEnabled("set_voice_hotkey_button", enable);
@@ -138,6 +140,7 @@ void LLPrefsVoiceLogic::cancel()
 {
 	gSavedSettings.setBOOL("EnableVoiceChat", mEnableVoice);
 	gSavedSettings.setBOOL("VoiceCallsFriendsOnly", mVoiceCallsFriendsOnly);
+	gSavedSettings.setBOOL("AutoDisengageMic", mAutoDisengageMic);
 	gSavedSettings.setString("PushToTalkButton", mModifier);
 	gSavedSettings.setBOOL("PushToTalkToggle", mPushToTalkToggle );
 	gSavedSettings.setS32("VoiceEarLocation", mEarLocation);

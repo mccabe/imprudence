@@ -68,6 +68,11 @@
 	     label="Only accept voice calls from people on My Friends list"
 	     left_delta="20" mouse_opaque="true" name="voice_call_friends_only_check"
 	     radio_style="false" width="200" />
+  <check_box bottom_delta="-18" control_name="AutoDisengageMic" enabled="true"
+	     follows="left|top" font="SansSerifSmall" height="16" initial_value="false"
+	     label="Switch off microphone when ending IM calls"
+	     mouse_opaque="true" name="auto_disengage_mic_check"
+	     radio_style="false" width="200" />
 	<button bottom_delta="-40" follows="left|top" font="SansSerif" height="20"
 	     label="Device Settings" left="28" mouse_opaque="true"
 	     name="device_settings_btn" width="155" />
