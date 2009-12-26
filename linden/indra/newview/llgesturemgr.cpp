@@ -42,6 +42,7 @@
 // library
 #include "lldatapacker.h"
 #include "llinventory.h"
+#include "lliosocket.h"
 #include "llmultigesture.h"
 #include "llstl.h"
 #include "llstring.h"	// todo: remove
@@ -52,6 +53,7 @@
 #include "llagent.h"
 #include "llchatbar.h"
 #include "lldelayedgestureerror.h"
+#include "llinterface.h"
 #include "llinventorymodel.h"
 #include "llnotify.h"
 #include "llviewermessage.h"
@@ -231,6 +233,9 @@ void LLGestureManager::activateGestureWithAsset(const LLUUID& item_id,
 	// For now, put NULL into the item map.  We'll build a gesture
 	// class object when the asset data arrives.
 	mActive[item_id] = NULL;
+	Snowglobe::Interface::Packet p( "GestureManager", "Active" ) ;
+	p["id"] = item_id ;
+	p.send() ;
 
 	// Copy the UUID
 	if (asset_id.notNull())
@@ -262,6 +267,9 @@ void LLGestureManager::deactivateGesture(const LLUUID& item_id)
 		llwarns << "deactivateGesture for inactive gesture " << item_id << llendl;
 		return;
 	}
+	Snowglobe::Interface::Packet p( "GestureManager", "Inactive" ) ;
+	p["id"] = item_id ;
+	p.send() ;
 
 	// mActive owns this gesture pointer, so clean up memory.
 	LLMultiGesture* gesture = (*it).second;
@@ -317,6 +325,10 @@ void LLGestureManager::deactivateSimilarGestures(LLMultiGesture* in, const LLUUI
 		else if ((!gest->mTrigger.empty() && gest->mTrigger == in->mTrigger)
 				 || (gest->mKey != KEY_NONE && gest->mKey == in->mKey && gest->mMask == in->mMask))
 		{
+			Snowglobe::Interface::Packet p( "GestureManager", "Inactive" ) ;
+			p["id"] = item_id ;
+			p.send() ;
+
 			gest_item_ids.push_back(item_id);
 
 			stopGesture(gest);
@@ -411,6 +423,10 @@ void LLGestureManager::replaceGesture(const LLUUID& item_id, LLMultiGesture* new
 
 	LLMultiGesture* old_gesture = (*it).second;
 	stopGesture(old_gesture);
+	Snowglobe::Interface::Packet p( "GestureManager", "Replace" ) ;
+	p["id"]    = item_id ;
+	p["asset"] = asset_id ;
+	p.send() ;
 
 	mActive.erase(item_id);
 
@@ -961,6 +977,12 @@ void LLGestureManager::onLoadComplete(LLVFS *vfs,
 
 			// Everything has been successful.  Add to the active list.
 			gGestureManager.mActive[item_id] = gesture;
+			{
+				Snowglobe::Interface::Packet p( "GestureManager", "LoadComplete" ) ;
+				p["id"]    = item_id ;
+				p["asset"] = asset_uuid ;
+				p.send() ;
+			}
 			gInventory.addChangedMask(LLInventoryObserver::LABEL, item_id);
 			if (inform_server)
 			{
@@ -987,6 +1009,9 @@ void LLGestureManager::onLoadComplete(LLVFS *vfs,
 			llwarns << "Unable to load gesture" << llendl;
 
 			gGestureManager.mActive.erase(item_id);
+			Snowglobe::Interface::Packet p( "GestureManager", "Inactive" ) ;
+			p["id"]    = item_id ;
+			p.send() ;
 			
 			delete gesture;
 			gesture = NULL;
@@ -1012,6 +1037,9 @@ void LLGestureManager::onLoadComplete(LLVFS *vfs,
 		llwarns << "Problem loading gesture: " << status << llendl;
 		
 		gGestureManager.mActive.erase(item_id);			
+		Snowglobe::Interface::Packet p( "GestureManager", "Inactive" ) ;
+		p["id"]    = item_id ;
+		p.send() ;
 	}
 }
 
