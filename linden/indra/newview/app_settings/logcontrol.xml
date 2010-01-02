@@ -47,6 +47,7 @@
 							<string>MediaCallback</string>
 							<string>MediaBuffering</string>
 							<string>MediaState</string>
+              <string>PanelSkins</string>
 							<string>ShaderLoading</string>
 						</array>
 				</map>

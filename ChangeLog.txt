@@ -1,5 +1,10 @@
 2010-01-01 McCabe Maxsted  <hakushakukun@gmail.com>
 
+	* Fixed skin-related debug messages not showing up.
+	
+	  modified:   linden/indra/newview/app_settings/logcontrol.xml
+	  
+	  
 	* Automatically find new viewer skins and list them in preferences (Windows only).
 	
 	  modified:   linden/indra/newview/llpanelskins.cpp
