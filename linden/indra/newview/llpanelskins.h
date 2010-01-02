@@ -36,6 +36,8 @@
 
 #include "llpanel.h"
 
+class LLScrollListCtrl;
+
 class LLPanelSkins : public LLPanel
 {
 public:
@@ -48,12 +50,13 @@ public:
 	void cancel();
 
 private:
+	void populateSkins();
+	
 	static void onSelectSkin(LLUICtrl* ctrl, void* data);
-	static void onClickClassic(void* data);
-	static void onClickSilver(void* data);
 
 private:
-	std::string mSkin;
+	std::string				mCurrentSkin;
+	LLScrollListCtrl*		mSkinsList;
 };
 
 #endif // LL_LLPANELSKINS_H
