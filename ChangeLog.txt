@@ -1,3 +1,11 @@
+2010-01-03 McCabe Maxsted  <hakushakukun@gmail.com>
+
+	* Added three new skins: meerkat, gemini, and dark.
+	
+	  modified:   linden/indra/cmake/ViewerArtwork.cmake
+	  modified:   linden/install.xml
+
+
 2010-01-03  Armin Weatherwax  <Armin.Weatherwax@gmail.com>
 
 	* Several changes to work better on 64bit Linux.
