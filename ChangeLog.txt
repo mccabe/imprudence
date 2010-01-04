@@ -1,5 +1,10 @@
 2010-01-03 McCabe Maxsted  <hakushakukun@gmail.com>
 
+	* Better skin preview image height.
+	
+	  modified:   linden/indra/newview/skins/default/xui/en-us/panel_preferences_skins.xml
+
+
 	* Added three new skins: meerkat, gemini, and dark.
 	
 	  modified:   linden/indra/cmake/ViewerArtwork.cmake

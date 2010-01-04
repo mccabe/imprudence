@@ -14,7 +14,7 @@
       sort_column="0" multi_select="false" mouse_opaque="true">
     <column name="skin_name" label="Skins" dynamicwidth="true" />
   </scroll_list>
-  <icon bottom="-180" color="1 1 1 1" enabled="true" follows="left|top" height="150"
+  <icon bottom="-180" color="1 1 1 1" enabled="true" follows="left|top" height="135"
      left_delta="160" mouse_opaque="true" image_name="default_no_skin_preview.png"
      name="preview_image" width="318" />
 </panel>
