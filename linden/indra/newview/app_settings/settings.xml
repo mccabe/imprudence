@@ -570,6 +570,28 @@
     <key>Value</key>
     <real>1.0</real>
   </map>
+  <key>StarObserverLatitude</key>
+  <map>
+    <key>Comment</key>
+    <string>Observer latitude for plotting real star maps</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <real>54.0</real>
+  </map>
+  <key>UseYBSCStars</key>
+  <map>
+    <key>Comment</key>
+    <string>Use real stars in the sky from the Yale BSC.(requires relog)</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <bool>1</bool>
+  </map>
   <key>VerticalIMTabs</key>
   <map>
     <key>Comment</key>
@@ -10070,7 +10092,7 @@
       <key>Value</key>
       <integer>0</integer>
     </map>
-    <key>StatsAutoRun</key>
+	<key>StatsAutoRun</key>
     <map>
       <key>Comment</key>
       <string>Play back autopilot</string>
@@ -12037,7 +12059,7 @@
       <map>
       </map>
     </map>
-    <key>VFSOldSize</key>
+	<key>VFSOldSize</key>
     <map>
       <key>Comment</key>
       <string>[DO NOT MODIFY] Controls resizing of local file cache</string>

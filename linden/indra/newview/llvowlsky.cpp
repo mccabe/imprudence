@@ -40,6 +40,9 @@
 #include "llface.h"
 #include "llwlparammanager.h"
 #include "llviewercontrol.h"
+#include "spherical.h"
+
+#include "time.h"
 
 #define DOME_SLICES 1
 const F32 LLVOWLSky::DISTANCE_TO_STARS = (HORIZON_DIST - 10.f)*0.25f;
@@ -75,16 +78,6 @@ inline U32 LLVOWLSky::getStripsNumVerts(void)
 inline U32 LLVOWLSky::getStripsNumIndices(void)
 {
 	return 2 * ((getNumStacks() - 2) * (getNumSlices() + 1)) + 1 ; 
-}
-
-inline U32 LLVOWLSky::getStarsNumVerts(void)
-{
-	return 1000;
-}
-
-inline U32 LLVOWLSky::getStarsNumIndices(void)
-{
-	return 1000;
 }
 
 LLVOWLSky::LLVOWLSky(const LLUUID &id, const LLPCode pcode, LLViewerRegion *regionp)
@@ -489,7 +482,7 @@ void LLVOWLSky::drawStars(void)
 	if (mStarsVerts.notNull())
 	{
 		mStarsVerts->setBuffer(LLDrawPoolWLSky::STAR_VERTEX_DATA_MASK);
-		mStarsVerts->draw(LLRender::POINTS, getStarsNumIndices(), 0);
+		mStarsVerts->draw(LLRender::POINTS, mStarVertices.size(), 0);
 	}
 }
 
@@ -534,17 +527,178 @@ void LLVOWLSky::drawDome(void)
 
 void LLVOWLSky::initStars()
 {
-	// Initialize star map
-	mStarVertices.resize(getStarsNumVerts());
-	mStarColors.resize(getStarsNumVerts());
-	mStarIntensities.resize(getStarsNumVerts());
+	llstat status;
+
+	if(!gSavedSettings.getBOOL("UseYBSCStars") || LLFile::stat("YBScatalog",&status)==0)
+	{
+		if(!initStarsYBSC())
+			initStarsRandom();
+	}
+	else
+	{
+		initStarsRandom();
+	}
+}
+
+bool LLVOWLSky::initStarsYBSC()
+{
+	mStarVertices.clear();
+	mStarColors.clear();
+	mStarIntensities.clear();
+
+	std::fstream catalog("YBScatalog",std::ios_base::in);
+
+	if(!catalog.is_open())
+	{
+		return false;
+	}
+
+	char buffer[255];
+
+	while(!catalog.eof())
+	{
+		catalog.getline(buffer,255); //read upto 255 characters
+
+		// The YBSC has some blank entries that have been removed
+		// but have been left to preserve sequence
+		// Test the field that should contain the first H value in J2000 RA
+		// If this is a space then the field is a legacy deleted field so skip
+		if(buffer[75]==32)
+			continue;
+
+		// get the observers latitude
+		F32 latitude=gSavedSettings.getF32("StarObserverLatitude");
+		latitude=llclamp(latitude,(F32)-90.0,(F32)90.0);
+
+		//Read anunal proper motions
+		F32 pmRA=extractF32YBSC(buffer,YBSC_PM_RA,YBSC_PM_RA_FIELD_LENGTH);
+		F32 pmD=extractF32YBSC(buffer,YBSC_PM_D,YBSC_PM_D_FIELD_LENGTH);
+
+		//Set our epoc to J2000 00:00:00 01/01/2000
+		time_t epoc=946706400; //Unix time
+		double diff=difftime(time(NULL),epoc);
+
+		diff=diff/(double)(60*60*24*365); // Seconds in year
+		// Our stars have moved on my diff* proper motion arcseconds per year
+
+		// Extract Right Assention from H:M:S data and store as radians
+		// J2000 RA data is fields 76 onwards
+		// in format HHMMSS.S
+		U8 h=extractU8YBSC(buffer,YBSC_J2000_RA_H);
+		U8 m=extractU8YBSC(buffer,YBSC_J2000_RA_M);
+		F32 s=extractF32YBSC(buffer,YBSC_J2000_RA_S,YBSC_J2000_RA_S_FIELD_LENGTH);
+		F64 RA=-1.0*polar::radFromHMS(h,m,s+(pmRA*diff));
+
+		// Extract Declination in D:M:S and convert to radians
+		// J2000 Declination data is in format -DDMMSS
+		U8 d=extractU8YBSC(buffer,YBSC_J2000_D_D);
+		m=extractU8YBSC(buffer,YBSC_J2000_D_M);
+		s=extractU8YBSC(buffer,YBSC_J2000_D_S);
+		F64 D = polar::radFromDMS(d,m,s+(pmD*diff));
+
+		// Get the quadrent and set decline appropratly, note this depends on our latitude
+		// as the real earth is round, so in the south below latitue 90 the declinations are inverted wrt
+		// the northen hemisphere. But star data is based on celistial axis
+		if(buffer[YBSC_J2000_D_Q]=='-')
+		{
+			D=D*-1.0;
+		}
+
+		//Read the magnitude value
+		F32 M=extractF32YBSC(buffer,YBSC_J2000_MAG,YBSC_J2000_MAG_FIELD_LENGTH);
+
+		//Add Position data to spherical co-ordinate set
+		spherical star(RA,D,DISTANCE_TO_STARS);
+
+		// Hours input here is the current time of day 0-24
+		// Degrees are the observers latitude position
+		// Shift star position to the desired observers position and the current local time
+		time_t now=time(NULL);
+		struct tm * local = localtime(&now);
+		star.shift_axis(polar::radFromHMS(local->tm_hour,local->tm_min,local->tm_sec),polar::radFromDegrees(latitude));
+
+		// Convert to cartesian
+		LLVector3 pos(star.asVector());
+
+		// Don't render stars below the render horizon
+		// We don't know this until we have done the spherical rotation
+		if(pos.mV[VZ]<0)
+		{
+			continue;
+		}
+
+		mStarVertices.push_back(pos);
+
+		// Brightest star = -1.41
+		// Dimmest visible object = 7.87
+		// Offical Scale is based on 5th root of 100 for
+		// intensity scale of stars eg 2.512^(x-y)
+		// More optimal SL viewing experience 1.6
+
+		double magnitude=pow(1.6,(double)(7.87-M));
+		magnitude=2.0*magnitude/pow(1.6,(double)(7.87+1.41));
+
+		// clamp to a min 0f 0.004, assume 8 bit alpha so a range of 0-1.0
+		// a value of 0.004 will scale to U8=1
+		magnitude=llclamp(magnitude,(double)0.004,(double)2.0);
+		mStarIntensities.push_back((F32)magnitude);
+
+		LLColor4 col;
+
+		// All white is borrrring
+		col.mV[VRED]   = 1.f ;
+		col.mV[VGREEN] = 1.f ;
+		col.mV[VBLUE]  = 1.f ;
+		col.mV[VALPHA] = magnitude;
+		col.clamp();
+
+		mStarColors.push_back(col);
+	}
+
+	catalog.close();
+	return true;
+}
+
+U8 LLVOWLSky::extractU8YBSC(char * buff,U8 pos)
+{
+	char workBuffer[3];
+	U8 result;
+
+	memcpy(workBuffer,&buff[pos],2);
+	workBuffer[2]=0;
+
+	sscanf(workBuffer,"%u",&result);
+	return result;
+}
+
+F32 LLVOWLSky::extractF32YBSC(char * buff,U8 pos,U8 len)
+{
+
+	char * workBuffer=(char *)malloc(len+1);
+	F32 result;
+
+	memcpy(workBuffer,&buff[pos],len);
+	workBuffer[len]=0;
+
+	sscanf(workBuffer,"%f",&result);
+
+	free(workBuffer);
+	return result;
+
+}
+
+void LLVOWLSky::initStarsRandom()
+{
+	mStarVertices.resize(FIXNUMSTARS);
+	mStarColors.resize(FIXNUMSTARS);
+	mStarIntensities.resize(FIXNUMSTARS);
 
 	std::vector<LLVector3>::iterator v_p = mStarVertices.begin();
 	std::vector<LLColor4>::iterator v_c = mStarColors.begin();
 	std::vector<F32>::iterator v_i = mStarIntensities.begin();
 
 	U32 i;
-	for (i = 0; i < getStarsNumVerts(); ++i)
+	for (i = 0; i < mStarVertices.size(); ++i)
 	{
 		v_p->mV[VX] = ll_frand() - 0.5f;
 		v_p->mV[VY] = ll_frand() - 0.5f;
@@ -734,7 +888,7 @@ void LLVOWLSky::updateStarColors()
 	{
 		F32 intensity;						//  max intensity of each star
 		U32 x;
-		for (x = 0; x < getStarsNumVerts(); ++x)
+		for (x = 0; x < mStarVertices.size(); ++x)
 		{
 			F32 sundir_factor = 1;
 			LLVector3 tostar = *v_p;
@@ -774,7 +928,7 @@ BOOL LLVOWLSky::updateStarGeometry(LLDrawable *drawable)
 	if (mStarsVerts.isNull())
 	{
 		mStarsVerts = new LLVertexBuffer(LLDrawPoolWLSky::STAR_VERTEX_DATA_MASK, GL_DYNAMIC_DRAW);
-		mStarsVerts->allocateBuffer(getStarsNumVerts(), getStarsNumIndices(), TRUE);
+		mStarsVerts->allocateBuffer(mStarVertices.size(), mStarVertices.size(), TRUE);
 	}
 
 	BOOL success = mStarsVerts->getVertexStrider(verticesp)
@@ -789,7 +943,7 @@ BOOL LLVOWLSky::updateStarGeometry(LLDrawable *drawable)
 	// *TODO: fix LLStrider with a real prefix increment operator so it can be
 	// used as a model of OutputIterator. -Brad
 	// std::copy(mStarVertices.begin(), mStarVertices.end(), verticesp);
-	for (U32 vtx = 0; vtx < getStarsNumVerts(); ++vtx)
+	for (U32 vtx = 0; vtx < mStarVertices.size(); ++vtx)
 	{
 		*(verticesp++)  = mStarVertices[vtx];
 		*(colorsp++)    = LLColor4U(mStarColors[vtx]);

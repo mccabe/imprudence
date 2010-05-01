@@ -25,6 +25,7 @@ set(llmath_SOURCE_FILES
     llsdutil_math.cpp
     m3math.cpp
     m4math.cpp
+    spherical.cpp
     raytrace.cpp
     v2math.cpp
     v3color.cpp
@@ -66,6 +67,7 @@ set(llmath_HEADER_FILES
     llvolumemgr.h
     m3math.h
     m4math.h
+    spherical.h
     raytrace.h
     v2math.h
     v3color.h

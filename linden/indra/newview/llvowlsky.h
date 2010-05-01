@@ -33,6 +33,28 @@
 #ifndef LL_VOWLSKY_H
 #define LL_VOWLSKY_H
 
+#define FIXNUMSTARS 100
+
+// Layout of the Yale Bright Star Catalog ASCII version
+#define YBSC_J2000_RA_H 75
+#define YBSC_J2000_RA_M 77
+#define YBSC_J2000_RA_S 79
+#define YBSC_J2000_RA_S_FIELD_LENGTH 4
+
+#define YBSC_J2000_D_Q 83
+#define YBSC_J2000_D_D 84
+#define YBSC_J2000_D_M 86
+#define YBSC_J2000_D_S 88
+
+#define YBSC_J2000_MAG 102
+#define YBSC_J2000_MAG_FIELD_LENGTH 5
+
+#define YBSC_PM_RA 148
+#define YBSC_PM_RA_FIELD_LENGTH 6
+
+#define YBSC_PM_D 154
+#define YBSC_PM_D_FIELD_LENGTH 6
+
 #include "llviewerobject.h"
 
 class LLVOWLSky : public LLStaticViewerObject {
@@ -77,6 +99,11 @@ private:
 
 	// helper function for initializing the stars.
 	void initStars();
+	bool initStarsYBSC();
+	void initStarsRandom();
+
+	U8 extractU8YBSC(char * buff,U8 pos);
+	F32	extractF32YBSC(char * buff,U8 pos,U8 len);
 
 	// helper function for building the fan vertex buffer.
 	static void buildFanBuffer(LLStrider<LLVector3> & vertices,
