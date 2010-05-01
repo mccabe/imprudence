@@ -2037,12 +2037,17 @@ S32 LLTextureFetch::getFetchState(const LLUUID& id, F32& data_progress_p, F32& r
 			if (state == LLTextureFetchWorker::LOAD_FROM_SIMULATOR)
 			{
 				S32 data_size = FIRST_PACKET_SIZE + (worker->mLastPacket-1) * MAX_IMG_PACKET_SIZE;
-				data_size = llmax(data_size, 0);
-				data_progress = (F32)data_size / (F32)worker->mFileSize;
+				// Progress values must be clamped to the range 0.0..1.0
+				// + mLastPacket is initialy -1
+				// + mFileSize may be less than FIRST_PACKET_SIZE
+				data_progress = llclamp((F32)data_size / (F32)worker->mFileSize, 0.0f, 1.0f);
 			}
 			else if (worker->mFormattedImage.notNull())
 			{
-				data_progress = (F32)worker->mFormattedImage->getDataSize() / (F32)worker->mFileSize;
+				// Progress values must be clamped to the range 0.0..1.0
+				// + getDataSize returns FIRST_PACKET_SIZE for small images.
+				// + mFileSize may be less than FIRST_PACKET_SIZE
+				data_progress = llclamp((F32)worker->mFormattedImage->getDataSize() / (F32)worker->mFileSize, 0.0f, 1.0f);
 			}
 		}
 		if (state >= LLTextureFetchWorker::LOAD_FROM_NETWORK && state <= LLTextureFetchWorker::WAIT_HTTP_REQ)
