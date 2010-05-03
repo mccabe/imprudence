@@ -146,6 +146,17 @@
     <key>Value</key>
     <string>http://support.secondlife.com</string>
   </map>
+  <key>IncludeTimestampInSnapshotName</key>
+  <map>
+    <key>Comment</key>
+    <string>Append timstamp to snapshot filename</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>Boolean</string>
+    <key>Value</key>
+    <integer>1</integer>
+  </map>
   <key>InventorySearchType</key>
   <map>
     <key>Comment</key>

@@ -54,6 +54,7 @@
 //
 
 // linden library includes
+#include "apr_time.h"
 #include "audioengine.h"		// mute on minimize
 #include "indra_constants.h"
 #include "llassetstorage.h"
@@ -3665,7 +3666,9 @@ BOOL LLViewerWindow::mousePointOnLandGlobal(const S32 x, const S32 y, LLVector3d
 	return FALSE;
 }
 
-// Saves an image to the harddrive as "SnapshotX" where X >= 1.
+// Saves an image to the harddrive as "SnapshotXXX.<ext>" where XXX >= 001.
+// if IncludeTimestampInSnapshotName is set to TRUE, a timestamp gets added to the name:
+// Snapshot_yyyy-mm-dd_HHhMMmSSs.<ext>
 BOOL LLViewerWindow::saveImageNumbered(LLImageFormatted *image)
 {
 	if (!image)
@@ -3686,8 +3689,8 @@ BOOL LLViewerWindow::saveImageNumbered(LLImageFormatted *image)
 	else if (extension == ".tga")
 		pick_type = LLFilePicker::FFSAVE_TGA;
 	else
-		pick_type = LLFilePicker::FFSAVE_ALL; // ???
-	
+		pick_type = LLFilePicker::FFSAVE_ALL; // no restriction to a specific file extension when saving file (*.*)
+
 	// Get a base file location if needed.
 	if ( ! isSnapshotLocSet())		
 	{
@@ -3710,24 +3713,69 @@ BOOL LLViewerWindow::saveImageNumbered(LLImageFormatted *image)
 		LLViewerWindow::sSnapshotDir = gDirUtilp->getDirName(filepath);
 	}
 
-	// Look for an unused file name
+	// build filepath/filename
+	// Append either the old _XXX system or timestamps to snapshot filenames -- MC
 	std::string filepath;
-	S32 i = 1;
-	S32 err = 0;
 
-	do
+	// <pickedsavefolder>/<pickedfilename>_yyyy-mm-dd_HHhMMmSSs
+	if (gSavedSettings.getBOOL("IncludeTimestampInSnapshotName")) 
 	{
+		// borrowed from llcommon\lldate.cpp:
+		const F64 LL_APR_USEC_PER_SEC = 1000000.0;
+		// should be APR_USEC_PER_SEC, but that relies on INT64_C which
+		// isn't defined in glib under our build set up for some reason
+
+		// add GMT timestamp to filename, format is _yyyy-mm-dd_HHhMMmSSs
+		LLDate date = LLDate::now();
+		apr_time_t time = (apr_time_t)(date.secondsSinceEpoch() * LL_APR_USEC_PER_SEC);
+		apr_time_exp_t exp_time;
+
+		std::ostringstream stream;
+		// borrowed from llcommon\lldate.cpp:
+		if (apr_time_exp_gmt(&exp_time, time) != APR_SUCCESS)
+		{
+			// fallback to a dummy date if something is wrong
+			stream << "_1970-01-01_00h00m00s";
+		} 
+		else 
+		{
+			// More human readable than just numbers -- MC
+			stream << std::setfill('0') << '_' << std::setw(4) << (exp_time.tm_year + 1900)
+			  << '-' << std::setw(2) << (exp_time.tm_mon + 1)
+			  << '-' << std::setw(2) << (exp_time.tm_mday)
+			  << '_' << std::setw(2) << (exp_time.tm_hour) 
+			  << 'h' << std::setw(2) << (exp_time.tm_min) 
+			  << 'm' << std::setw(2) << (exp_time.tm_sec) 
+			  << 's';
+		}
+
+		// build actual filepath with optional timestamp
 		filepath = sSnapshotDir;
 		filepath += gDirUtilp->getDirDelimiter();
 		filepath += sSnapshotBaseName;
-		filepath += llformat("_%.3d",i);
+		filepath += stream.str();
 		filepath += extension;
-
-		llstat stat_info;
-		err = LLFile::stat( filepath, &stat_info );
-		i++;
 	}
-	while( -1 != err );  // search until the file is not found (i.e., stat() gives an error).
+	else
+	{
+		// Look for an unused file name
+		llstat stat_info;
+		S32 i = 1;
+		S32 err = 0;
+
+		do
+		{
+			// <pickedsavefolder>/<pickedfilename>_001
+			filepath = sSnapshotDir;
+			filepath += gDirUtilp->getDirDelimiter();
+			filepath += sSnapshotBaseName;
+			filepath += llformat("_%.3d",i);
+			filepath += extension;
+			err = LLFile::stat( filepath, &stat_info );
+			i++;
+		}
+		while( -1 != err );  // search until the file is not found (i.e., stat() gives an error).
+	}
 
 	return image->save(filepath);
 }
