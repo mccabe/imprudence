@@ -111,6 +111,7 @@ LLViewerObjectList::LLViewerObjectList()
 	mNumDeadObjectUpdates = 0;
 	mNumUnknownKills = 0;
 	mNumUnknownUpdates = 0;
+	mExpectedRez = 0;
 }
 
 LLViewerObjectList::~LLViewerObjectList()
@@ -262,11 +263,17 @@ void LLViewerObjectList::processUpdateCore(LLViewerObject* objectp,
 	// Apply custom settings not set in llmanip and lltoolplacer here.
 	// Don't check for permissions in case opensim ever implements
 	// default prim permission support serverside -- MC
-	if (objectp 
+	if (0 < getExpectedRez()
+		&& objectp
 		&& just_created 
 		&& objectp->permYouOwner()
+		/*&& objectp->permModify()
+		&& objectp->permCopy()
+		&& objectp->permTransfer()*/
 		&& objectp->mCreateSelected)
 	{
+		mExpectedRez--;
+		if (mExpectedRez < 0) mExpectedRez = 0;
 		LLMessageSystem* msg = gMessageSystem;
 		msg->newMessageFast(_PREHASH_ObjectImage);
 		msg->nextBlockFast(_PREHASH_AgentData);

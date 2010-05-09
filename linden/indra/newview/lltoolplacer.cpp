@@ -484,6 +484,9 @@ BOOL LLToolPlacer::addObject( LLPCode pcode, S32 x, S32 y, U8 use_physics )
 	// Pack in name value pairs
 	gMessageSystem->sendReliable(regionp->getHost());
 
+	// So we don't assign textures etc to rezzed objects -- MC
+	gObjectList.incExpectedRez();
+
 	// Spawns a message, so must be after above send
 	if (create_selected)
 	{

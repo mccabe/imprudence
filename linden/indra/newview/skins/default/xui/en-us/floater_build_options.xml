@@ -33,45 +33,45 @@
 	     width="165" />
   
   <text type="string" length="1" bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
-					 bottom_delta="-30" drop_shadow_visible="true" enabled="true" follows="left|top" font="SansSerifSmall"
-					 h_pad="0" halign="left" height="10" left="44" mouse_opaque="false"
-					 name="text_box3" v_pad="0" width="150">        Object Size</text>
+			 bottom_delta="-30" drop_shadow_visible="true" enabled="true" follows="left|top" font="SansSerifSmall"
+			 h_pad="0" halign="left" height="10" left="44" mouse_opaque="false"
+			 name="text_box3" v_pad="0" width="150">        Object Size</text>
   <text type="string" length="1" bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
-     bottom_delta="0" drop_shadow_visible="true" enabled="true" follows="left|top" font="SansSerifSmall"
-     h_pad="0" halign="left" height="10" left_delta="130" mouse_opaque="false"
-     name="text_box4" v_pad="0" width="150">        Settings</text>
+       bottom_delta="0" drop_shadow_visible="true" enabled="true" follows="left|top" font="SansSerifSmall"
+       h_pad="0" halign="left" height="10" left_delta="130" mouse_opaque="false"
+       name="text_box4" v_pad="0" width="150">        Settings</text>
   <text type="string" length="1" bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
-     bottom_delta="0" drop_shadow_visible="true" enabled="true" follows="left|top" font="SansSerifSmall"
-     h_pad="0" halign="left" height="10" left_delta="190" mouse_opaque="false"
-     name="text_box5" v_pad="0" width="150">        Texture</text>
+       bottom_delta="0" drop_shadow_visible="true" enabled="true" follows="left|top" font="SansSerifSmall"
+       h_pad="0" halign="left" height="10" left_delta="190" mouse_opaque="false"
+       name="text_box5" v_pad="0" width="150">        Texture</text>
   <view_border bevel_style="none" border_thickness="1" bottom_delta="-98" follows="top|left" height="90"
-     left="14" name="SizeBorder" width="120" />
+       left="14" name="SizeBorder" width="120" />
   <view_border bevel_style="none" border_thickness="1" bottom_delta="-0" follows="top|left" height="90"
-     left_delta="134" name="SettingsBorder" width="100" />
+       left_delta="134" name="SettingsBorder" width="100" />
   <view_border bevel_style="none" border_thickness="1" bottom_delta="0" follows="top|left" height="90"
-     left_delta="114" name="TextureBorder" width="250" />
+       left_delta="114" name="TextureBorder" width="250" />
   
   <spinner bottom="-200" decimal_digits="5" follows="left|top" height="16" increment="0.05"
-     label="X Size" label_width="40" left="20" max_val="10" min_val="0.01"
-     mouse_opaque="true" name="X size" width="110" />
+       label="X Size" label_width="40" left="20" max_val="10" min_val="0.01"
+       mouse_opaque="true" name="X size" width="110" />
   <spinner bottom_delta="-20" decimal_digits="5" follows="left|top" height="16" increment="0.05"
-     label="Y Size" label_width="40" left_delta="0" max_val="10" min_val="0.01"
-     mouse_opaque="true" name="Y size" width="110" />
+       label="Y Size" label_width="40" left_delta="0" max_val="10" min_val="0.01"
+       mouse_opaque="true" name="Y size" width="110" />
   <spinner bottom_delta="-20" decimal_digits="5" follows="left|top" height="16" increment="0.05"
-     label="Z Size" label_width="40" left_delta="0" max_val="10" min_val="0.01"
-     mouse_opaque="true" name="Z size" width="110" />
+       label="Z Size" label_width="40" left_delta="0" max_val="10" min_val="0.01"
+       mouse_opaque="true" name="Z size" width="110" />
   
   <check_box bottom="-200" enabled="true" follows="left|top" font="SansSerifSmall" height="16"
-     label="Phantom" left="154" mouse_opaque="true" name="PhantomToggle" radio_style="false"
-     width="100" />
+       label="Phantom" left="154" mouse_opaque="true" name="PhantomToggle" radio_style="false"
+       width="100" />
   <check_box bottom_delta="-20" enabled="true" follows="left|top" font="SansSerifSmall" height="16"
-     label="Physical" left_delta="0" mouse_opaque="true" name="PhysicalToggle" radio_style="false"
-     width="100" />
+       label="Physical" left_delta="0" mouse_opaque="true" name="PhysicalToggle" radio_style="false"
+       width="100" />
   <check_box bottom_delta="-20" enabled="true" follows="left|top" font="SansSerifSmall" height="16"
-     label="Temporary" left_delta="0" mouse_opaque="true" name="TemporaryToggle" radio_style="false"
-     width="100" />
+       label="Temporary" left_delta="0" mouse_opaque="true" name="TemporaryToggle" radio_style="false"
+       width="100" />
   <combo_box allow_text_entry="false" bottom_delta="-20" left_delta="1" follows="left|top" height="18"
-     left="10" max_chars="20" mouse_opaque="true" name="material" width="87">
+       left="10" max_chars="20" mouse_opaque="true" name="material" width="87">
     <combo_item name="Stone" value="Stone">Stone</combo_item>
     <combo_item name="Metal" value="Metal">Metal</combo_item>
     <combo_item name="Glass" value="Glass">Glass</combo_item>
@@ -82,25 +82,25 @@
   </combo_box>
   
   <texture_picker allow_no_texture="false" bottom="-265" can_apply_immediately="true" default_image_name="Default"
-     follows="left|top" height="80" label="Texture" left="270" mouse_opaque="true"
-     name="texture control" tool_tip="Click to choose a picture"
-     width="64"/>
+       follows="left|top" height="80" label="Texture" left="270" mouse_opaque="true"
+       name="texture control" tool_tip="Click to choose a picture"
+       width="64"/>
   <color_swatch border_color="0.45098, 0.517647, 0.607843, 1" bottom_delta="0" can_apply_immediately="true"
-     color="1, 1, 1, 1" follows="left|top" height="80" label="Color" left_delta="75"
-     mouse_opaque="true" name="colorswatch" tool_tip="Click to open Color Picker" width="64" />
+       color="1, 1, 1, 1" follows="left|top" height="80" label="Color" left_delta="75"
+       mouse_opaque="true" name="colorswatch" tool_tip="Click to open Color Picker" width="64" />
   
   <spinner bottom="-200" decimal_digits="0" follows="left|top" height="16" increment="1"
-     label="Alpha" label_width="40" left_delta="70" max_val="100" min_val="0"
-     mouse_opaque="true" name="alpha" width="90" />
+       label="Alpha" label_width="40" left_delta="70" max_val="100" min_val="0"
+       mouse_opaque="true" name="alpha" width="90" />
   <spinner bottom_delta="-20" enabled="true" decimal_digits="2" follows="left|top" height="16"
-     increment="0.05" label="Glow" label_width="40" left_delta="0" max_val="1"
-     min_val="0" mouse_opaque="true" name="glow" width="90" />
+       increment="0.05" label="Glow" label_width="40" left_delta="0" max_val="1"
+       min_val="0" mouse_opaque="true" name="glow" width="90" />
   <check_box bottom_delta="-20" enabled="true" follows="left|top" font="SansSerifSmall" height="16"
-     label="Full Bright" left_delta="0" mouse_opaque="true" name="FBToggle" radio_style="false"
-     width="100" />
+       label="Full Bright" left_delta="0" mouse_opaque="true" name="FBToggle" radio_style="false"
+       width="100" />
   <combo_box allow_text_entry="false" bottom_delta="-20" follows="left|top" height="18" left_delta="0"
-     max_chars="20" mouse_opaque="true" name="combobox shininess" tool_tip="Set the amount of shine for the object"
-     width="90">
+       max_chars="20" mouse_opaque="true" name="combobox shininess" tool_tip="Set the amount of shine for the object"
+       width="90">
     <combo_item name="None" value="None">          None</combo_item>
     <combo_item name="Low" value="Low">          Low</combo_item>
     <combo_item name="Medium" value="Medium">          Medium</combo_item>
@@ -108,62 +108,62 @@
   </combo_box>
   
   <view_border blevel_style="in" bottom_delta="-40" follows="left|top" height="16" left="14"
-     mouse_opaque="false" name="im_give_drop_target_rect" width="400"/>
+       mouse_opaque="false" name="im_give_drop_target_rect" width="400"/>
   <text bg_visible="false" border_drop_shadow_visible="false" border_visible="false" bottom_delta="0"
-     drop_shadow_visible="true" follows="left|top" font="SansSerifSmall" h_pad="0" halign="center"
-     height="16" left_delta="0" mouse_opaque="true" name="Give inventory" tool_tip="Drop an inventory item here."
-     v_pad="2" width="400">        Drop an inventory item here to have it added to the prim contents.</text>
+       drop_shadow_visible="true" follows="left|top" font="SansSerifSmall" h_pad="0" halign="center"
+       height="16" left_delta="0" mouse_opaque="true" name="Give inventory" tool_tip="Drop an inventory item here."
+       v_pad="2" width="400">        Drop an inventory item here to have it added to the prim contents.</text>
   <view_border blevel_style="in" bottom_delta="-18" follows="left|top" height="16" left_delta="0"
-     mouse_opaque="false" name="build_item_add_disp_rect" width="400"/>
+       mouse_opaque="false" name="build_item_add_disp_rect" width="400"/>
   <button bottom_delta="0" enabled="true" font="SansSerif" halign="center" height="20"
-     label="Clear Item" left_delta="405" mouse_opaque="true"
-     name="btn_clear" scale_image="true" width="90" />
+       label="Clear Item" left_delta="405" mouse_opaque="true"
+       name="btn_clear" scale_image="true" width="90" />
   <text bg_visible="false" border_drop_shadow_visible="false" border_visible="false" bottom_delta="0"
-     drop_shadow_visible="true" follows="left|top" font="SansSerifSmall" h_pad="0" halign="center"
-     height="16" left="14" mouse_opaque="true" name="build_item_add_disp_rect_txt" tool_tip=""
-     v_pad="2" width="400">        Currently set to: ITEM</text>
+       drop_shadow_visible="true" follows="left|top" font="SansSerifSmall" h_pad="0" halign="center"
+       height="16" left="14" mouse_opaque="true" name="build_item_add_disp_rect_txt" tool_tip=""
+       v_pad="2" width="400">        Currently set to: ITEM</text>
   <check_box name="BuildPrefsEmbedItem" bottom_delta="-25" enabled="true" 
-     follows="left|top" font="SansSerifSmall" height="16"
-     initial_value="false" label="Embed an item into the newly created object" left_delta="0"
-     mouse_opaque="true" radio_style="false" width="270" />
+       follows="left|top" font="SansSerifSmall" height="16"
+       initial_value="false" label="Embed an item into the newly created object" left_delta="0"
+       mouse_opaque="true" radio_style="false" width="270" />
   
   <view_border bevel_style="none" border_thickness="1" bottom="-145" follows="top|left" height="105"
-     left="198" name="PivotBorder" width="135"/>
+       left="198" name="PivotBorder" width="135"/>
   <text type="string" length="1" bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
-     bottom_delta="110" drop_shadow_visible="true" enabled="true" follows="left|top" font="SansSerifSmall"
-     h_pad="0" halign="left" height="10" left_delta="35" mouse_opaque="false"
-     name="text_box6" v_pad="0" width="150">Axis Pivot Point</text>
+       bottom_delta="110" drop_shadow_visible="true" enabled="true" follows="left|top" font="SansSerifSmall"
+       h_pad="0" halign="left" height="10" left_delta="35" mouse_opaque="false"
+       name="text_box6" v_pad="0" width="150">        Axis Pivot Point</text>
   <spinner bottom_delta="-25" decimal_digits="5" follows="left|top" height="16" increment="0.05"
-     label="X Pos" label_width="40" left_delta="-28" mouse_opaque="true" max_val="256"
-     min_val="-256" name="X pos" width="120" />
+       label="X Pos" label_width="40" left_delta="-28" mouse_opaque="true" max_val="256"
+       min_val="-256" name="X pos" width="120" />
   <spinner bottom_delta="-20" decimal_digits="5" follows="left|top" height="16" increment="0.05"
-     label="Y Pos" label_width="40" left_delta="0" mouse_opaque="true" max_val="256"
-     min_val="-256" name="Y pos" width="120" />
+       label="Y Pos" label_width="40" left_delta="0" mouse_opaque="true" max_val="256"
+       min_val="-256" name="Y pos" width="120" />
   <spinner bottom_delta="-20" decimal_digits="5" follows="left|top" height="16" increment="0.05"
-     label="Z Pos" label_width="40" left_delta="0" mouse_opaque="true" max_val="256"
-     min_val="-256" name="Z pos" width="120" />
+       label="Z Pos" label_width="40" left_delta="0" mouse_opaque="true" max_val="256"
+       min_val="-256" name="Z pos" width="120" />
   <check_box bottom_delta="-20" enabled="true" follows="left|top" font="SansSerifSmall" height="16"
-     label="Values are percent" left_delta="-5" mouse_opaque="true"
-     tool_tip="Default settings are Percentages and every axis set at 50"
-     name="PivotPercToggle" radio_style="false" width="100" />
+       label="Values are percent" left_delta="-5" mouse_opaque="true"
+       tool_tip="Default settings are Percentages and every axis set at 50"
+       name="PivotPercToggle" radio_style="false" width="100" />
   
   <check_box bottom_delta="60" enabled="true" follows="left|top" font="SansSerifSmall" height="16"
-					 initial_value="true" label="Show Selection Outlines" left_delta="143"
-					 mouse_opaque="true" name="BuildPrefsRenderHighlight_toggle" 
-					 radio_style="false" width="270"/>
+			 initial_value="true" label="Show Selection Outlines" left_delta="143"
+			 mouse_opaque="true" name="BuildPrefsRenderHighlight_toggle"
+			 radio_style="false" width="270"/>
   <check_box bottom_delta="-20" enabled="true" follows="left|top" font="SansSerifSmall" height="16"
-     initial_value="false" label="Show Axis On Root Prim" left_delta="0"
-     mouse_opaque="true" tool_tip="Default behaviour is to show the axis on the center of mass of a linkset. If enabled, the axis will be shown on the root prim of the linkset instead."
-     name="BuildPrefsActualRoot_toggle" radio_style="false" width="270" />
+       initial_value="false" label="Show Axis On Root Prim" left_delta="0"
+       mouse_opaque="true" tool_tip="Default behaviour is to show the axis on the center of mass of a linkset. If enabled, the axis will be shown on the root prim of the linkset instead."
+       name="BuildPrefsActualRoot_toggle" radio_style="false" width="270" />
   <check_box bottom_delta="-20" enabled="true" follows="left|top" font="SansSerifSmall" height="16"
-     label="Rez Objects Using Land Group" left_delta="0" mouse_opaque="true"
-     tooltip="Rez objects on group land using the land's group (if possible)" 
-     name="grouplandrez" radio_style="false" width="270" />
+       label="Rez Objects Using Land Group" left_delta="0" mouse_opaque="true"
+       tooltip="Rez objects on group land using the land's group (if possible)"
+       name="grouplandrez" radio_style="false" width="270" />
   <spinner bottom_delta="-25" decimal_digits="0" 
-     tool_tip="Sets the default decimal precision for move, resize, and rotate" 
-     follows="left|top" height="16" increment="1" initial_val="3"
-     label="Object edit decimal places" label_width="140" left_delta="0" max_val="5"
-     min_val="0" mouse_opaque="true" name="spinner_decimal" width="175" />
+       tool_tip="Sets the default decimal precision for move, resize, and rotate"
+       follows="left|top" height="16" increment="1" initial_val="3"
+       label="Object edit decimal places" label_width="140" left_delta="0" max_val="5"
+       min_val="0" mouse_opaque="true" name="spinner_decimal" width="175" />
 
   <button bottom="2" enabled="true" follows="right|bottom" font="SansSerif"
 	     halign="center" height="20" label="Cancel" right="-4" 

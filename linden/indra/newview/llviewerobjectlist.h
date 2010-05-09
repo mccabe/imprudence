@@ -135,6 +135,9 @@ public:
 	void orphanize(LLViewerObject *childp, U32 parent_id, U32 ip, U32 port);
 	void findOrphans(LLViewerObject* objectp, U32 ip, U32 port);
 
+	void incExpectedRez() { mExpectedRez++; }
+	int getExpectedRez() { return mExpectedRez; }
+
 public:
 	// Class for keeping track of orphaned objects
 	class OrphanInfo
@@ -215,6 +218,9 @@ protected:
 	std::set<LLViewerObject *> mSelectPickList;
 
 	friend class LLViewerObject;
+
+private:
+	int mExpectedRez;
 };
 
 
