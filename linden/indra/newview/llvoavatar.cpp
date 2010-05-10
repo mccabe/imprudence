@@ -3356,6 +3356,11 @@ void LLVOAvatar::resolveClient(LLColor4& avatar_name_color, std::string& client,
 			avatar_name_color *= (F32)0.333333333333;
 			client = "Gemini";
 		}
+		else if(idx == LLUUID("c228d1cf-4b5d-4ba8-84f4-899a0796aa97"))
+		{
+			avatar_name_color = LLColor4::white;
+			client = "SL Viewer 2";
+		}
 	}
 	if(client.empty())
 	{
