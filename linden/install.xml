@@ -1288,7 +1288,7 @@ Copyright (C) 2004-2005 Vladimir Berezniker @ http://public.xdi.org/=vmpn
             <key>md5sum</key>
             <string>7d0687f88bb152c46c3a9cd0fe337df8</string>
             <key>url</key>
-            <uri>http://s3.amazonaws.com/viewer-source-downloads/install_pkgs/openjpeg-1.4-linux32-20100514.tar.bz2</uri>
+            <uri>http://imprudenceviewer.org/download/libs/openjpeg-1.4-linux32-20100514.tar.bz2</uri>
           </map>
           <key>linux64</key>
            <map>
