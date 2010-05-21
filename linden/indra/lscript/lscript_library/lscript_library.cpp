@@ -472,6 +472,97 @@ void LLScriptLibrary::init()
 	// IF YOU ADD NEW SCRIPT CALLS, YOU MUST PUT THEM AT THE END OF THIS LIST.
 	// Otherwise the bytecode numbers for each call will be wrong, and all
 	// existing scripts will crash.
+
+	// The above statement likely no longer applies, as both OpenSim and SL should be compiling bytecode on the server.
+	// OpenSim Scripting Language functions, from WhiteStar@OpenSim -Patrick Sapinski (Friday, February 19, 2010)
+
+	// REGARDING OSSL FUNCTIONS
+	// These additions should be posted underneath the llFunctions
+	// These functions pertain to OpenSimulator and are in no part applicable to SecondLife by Linden Labs
+	// The Current State of these functions are in flux and development is ongoing.  Not all the functions are presently
+	// documented and therefore the description may be incomplete and require further attention.
+	// OpenSimulator is written in C# and not CPP therefore some values for example "double = float" etc. are different.
+
+	// OSSL corrections and syntax additions added + set in same order as found in OSSL_stub.cs of OpenSim Source (February 19, 2010)
+	// based on OpenSimulator Ver. 0.6.9 DEV Git # af265e001d3bf043590e480cd6574a14193f6de0 - Rev 12239
+
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osSetRegionWaterHeight", NULL, "f", "osSetRegionWaterHeight(float height)\nAdjusts Water Height on region.\n(OpenSim only.)"));	
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osSetRegionSunSettings", NULL, "iif", "osSetRegionSunSettings(integer useEstateSun, integer sunFixed, float sunHour)\nChanges the Estate Sun Settings, then Triggers a Sun Update\n'sunFixed' TRUE (1) to keep the sun stationary, FALSE (0) to use global time\n'sunHour' The \"Sun Hour\" that is desired, 0...24, with 0 just after SunRise.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osSetEstateSunSettings", NULL, "if", "osSetEstateSunSettings(integer sunFixed, float sunHour)\nsunFixed = 0 or 1, sunHour = 00.00 to 24.00.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osGetCurrentSunHour", "f", NULL, "float osGetCurrentSunHour()\nReturns Float Value of Current Sun Hour 0...24 0 = sunrise.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osSunGetParam","f", "s", "float osSunGetParam(string param)\nReturns current float values for param\nwhere param = day_length, year_length, day_night_offset, update_interval.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osSunSetParam", "sf", NULL, "osSunSetParam(string param, float value)\nSet's Sun Param for SunSet,\nosSunSetParam(day_length, 24.0)\nwhere param = day_length, year_length, day_night_offset, update_interval.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osWindActiveModelPluginName", "s", NULL, "string osWindActiveModelPluginName()\nReturns the Current Working Wind Module Installed\nThese are SimpleRandomWind or ConfigurableWind, optionally others.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osWindParamSet", NULL, "ssf", "osWindParamSet(string plugin, string param, float value)Send Param to Specified Wind Plugin with new value.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osWindParamGet", "f", "ss", "float osWindParamGet(string plugin, string param)\n Returns Current param from specified Wind Plugin Module.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osList2Double", "f", "si", "double osList2Double(list src, int index)\nReturns Double (float) Value from src at index.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osSetDynamicTextureURL", NULL, "ssssi", "osSetDynamicTextureURL(string dynamicID, string contentType, string url, string extraParams, int timer )\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osSetDynamicTextureData", NULL, "ssssi", "osSetDynamicTextureData(string dynamicID, string contentType, string data, string extraParams, int timer)\nWrites text and vector graphics onto a prim face.\n(OpenSim only.)"));	
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osSetDynamicTextureURLBlend", NULL, "ssssii", "osSetDynamicTextureURLBlend(string dynamicID, string contentType, string url, string extraParams, int timer, int alpha)\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osSetDynamicTextureDataBlend", NULL, "ssssii", "osSetDynamicTextureDataBlend(string dynamicID, string contentType, string data, string extraParams, int timer, int alpha)\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osSetDynamicTextureURLBlendFace", NULL, "ssssfiiii", "osSetDynamicTextureURLBlendFace(string dynamicID, string contentType, string url, string extraParams, bool blend, int disp, int timer, int alpha, int face)\nLoads a web texture on a prim.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osSetDynamicTextureDataBlendFace", NULL, "ssssfiiii", "osSetDynamicTextureDataBlendFace(string dynamicID, string contentType, string data, string extraParams, bool blend, int disp, int timer, int alpha, int face)\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osTerrainGetHeight", "f", "ii", "float osTerrainGetHeight(int x, int y)\nReturns current terrain height at the given coordinates.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osTerrainSetHeight", NULL, "iif", "osTerrainSetHeight(int x, int y, float val)\nSets terrain height at the given coordinates. Use osTerrainsFlush() afterwards.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osTerrainFlush", NULL, NULL, "osTerrainFlush()\nUpdates terrain data. Call this after you are done using osTerrainSetHeight.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osRegionRestart", NULL, "f", "int osRegionRestart(double seconds)\nRestart the current region in the specified number of seconds from now.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osRegionNotice",NULL, "s", "osRegionNotice(string msg)\nBroadcasts a notification message to all agents on the current region.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osConsoleCommand", NULL, "s", "osConsoleCommand(string command)\nIssues commands directly to the OpenSim server console.\n(OpenSim only.)"));	
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osSetParcelMediaURL", NULL, "s", "osSetParcelMediaURL(string url)\nSets Parcel Media URL.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osSetParcelSIPAddress", NULL, "s", "osSetParcelSIPAddress(string SIPAddress)\nSets Parcel SIP Address for Voice.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osSetPrimFloatOnWater", NULL, "i", "osSetPrimFloatOnWater(int floatYN)\nMake Physical prims float at the water level, TRUE or FALSE.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osTeleportAgent", NULL, "ksvv", "osTeleportAgent(key agent, string regionName, vector position, vector lookat)\nTeleport the specified agent. This function is polymorphic; see the docs for other available forms.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osGetAgentIP", "s", "k", "string osGetAgentIP(key agent)\nReturns the Avatars IP Address\nAllows in world tools be used to coordinate out of world network services that need access to client ip addresses.\nShould ONLY be used by Region Server Owner.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osGetAgents", "l", NULL, "list osGetAgents()\nReturns a list of all avatars in the region in which the script is running.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osAvatarPlayAnimation", NULL, "ks", "osAvatarPlayAnimation(key avatar, string animation)\nTriggers animations contained within the same prim as the script. Does not need the target avatar's permission.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osAvatarStopAnimation", NULL, "ks", "osAvatarStopAnimation(key avatar, string animation)\nStops specified animation on the specified avatar.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osMovePen", NULL, "sii", "osMovePen(string drawList, int x, int y)\nMoves the pen's location to the coordinates specified by the x and y parameters, without drawing anything.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osDrawLine", NULL, "siiii", "osDrawLine(string drawList, int startX, int startY, int endX, int endY)\nosDrawLine(string drawList, int endX, int endY)\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osDrawText", NULL, "ss", "osDrawText(string drawList, string text)\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osDrawEllipse", NULL, "sii", "osDrawEllipse(string drawList, int width, int height)\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osDrawRectangle", NULL, "sii", "osDrawRectangle(string drawList, int width, int height)\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osDrawFilledRectangle", NULL, "sii", "osDrawFilledRectangle(string drawList, int width, int height)\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osDrawPolygon", NULL, "ll", "osDrawPolygon (string drawList, List x, List y)\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osDrawFilledPolygon", NULL, "ll", "string osDrawFilledPolygon (string drawList, List x, List y)\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osSetFontSize", NULL, "si", "osSetFontSize(string drawList, int fontSize)\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osSetFontName", NULL, "ss", "osSetFontName(string drawList, string fontName)\nSets Current Font to one available on Server.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osSetPenSize", NULL, "si", "osSetPenSize(string drawList, int penSize)\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osSetPenCap", NULL, "sss", "osSetPenCap(string drawList, string direction, string type)\nThis allows using arrow, diamond, round and flat caps.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osSetPenColour", NULL, "ss", "osSetPenColour(string drawList, string colour)\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osDrawImage", NULL, "siis", "osDrawImage(string drawList, int width, int height, string imageUrl)\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osGetDrawStringSize", "v", "sssi", "vector osGetDrawStringSize(string contentType, string text, string fontName, int fontSize)\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osSetStateEvents", NULL, "i", "osSetStateEvents(int events)\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osGetScriptEngineName", "s", NULL, "string osGetScriptEngineName()\nReturns current Script Engine enabled on Server.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osGetSimulatorVersion", "s", NULL, "string osGetSimulatorVersion()\nReturns OpenSim Server Version information.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osParseJSON", NULL, "s", "Hashtable osParseJSON(string JSON)\nReturns a hashtable containing the structured JSON contents (C# only).\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osMessageObject", NULL, "ks", "osMessageObject(key objectUUID, string message)\nSends a string to the object identified by objectUUID. The receiving object requires a dataserver(key queryid, string data) in a contained script(s). The queryid passed will be the id of the calling object.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osMakeNotecard", NULL, "sl", "osMakeNotecard(string notecardName, list contents)\nWrite a Notecard contained in Prim with contents of list.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osGetNotecardLine", "s", "si", "string osGetNotecardLine(string name, int line)\nReads the requested notecard line and return its data as a string.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osGetNotecard", "s", "s", "string osGetNotecard(string name)\nReads the entire notecard and return its data as a string.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osGetNumberOfNotecardLines", "i", "s", "integer osGetNumberOfNotecardLines(string name)\nReturns total number of lines in a notecard.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osAvatarName2Key", "s", "ss", "string osAvatarName2Key(string firstname, string lastname)\nReturns the Avatar UUID from their firstname, lastname.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osKey2Name", "s", "k", "string osKey2Name(key id)\nReturns Avatar Name from their UUID key.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osGetGridNick", "s", NULL, "string osGetGridNick()\nReturns Grid Nickname.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osGetGridName", "s", NULL, "string osGetGridName()\nReturns Grid Name.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osGetGridLoginURI", "s", NULL, "string osGetGridLoginURI()\nReturns Grid LoginURI.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osFormatString", "s", "sl", "string osFormatString(string str, list strings)\nReturn the string with parameters substituted into it (format comes from .NET String.Format class) in. Parameters are specified positionally.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osMatchString", "l", "ssi", "list osMatchString(string src, string pattern, int start)\nReturn a list of matches for the pattern and its components inside the source string. The pattern is a regular expression. Each match in the result is the string that matched and its position in the source.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osLoadedCreationDate", "s", NULL, "string osLoadedCreationDate()\nReturns Creation Date from meta data of OAR.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osLoadedCreationTime", "s", NULL, "string osLoadedCreationTime()\nReturns Creation Time from meta data of OAR.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osLoadedCreationID", "s", NULL, "string osLoadedCreationID()\nReturns Creation ID from meta data of OAR. Not Machine Identying.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osGetLinkPrimitiveParams", "l", "il", "list osGetLinkPrimitiveParams(int linknumber, list rules)\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osNpcCreate", "k", "ssvk", "key osNpcCreate(string firstname, string lastname, vector position, key cloneFrom)\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osNpcMoveTo", NULL, "kv", "key osNpcMoveTo(key npc, vector position)\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osNpcSay", NULL, "ks", "key osNpcSay(key npc, string message)\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osNpcRemove", NULL, "k", "key osNpcRemove(key npc)\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osGetMapTexture", "k", NULL, "key osGetMapTexture() Returns the Map Texture UUID.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osGetRegionMapTexture", "k", NULL, "key osGetRegionMapTexture(string regionName)\nReturns the Map Texture UUID for the regionName requested.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osGetRegionStats", "l", NULL, "List osGetRegionStats()\nReturns a list of float values representing a number of region statistics (21 of the values shown in the Statistics Bar of LL-based clients).\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osGetSimulatorMemory", "i", NULL, "Integer osGetSimulatorMemory()\nReturns the Actual Amount of RAM used by the current OpenSim instance.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osKickAvatar", NULL, "sss", "osKickAvatar(string FirstName, string LastName, string alert)\nKicks avatar from Region with an Alert Message.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osSetSpeed", NULL, "kf", "osSetSpeed(key AVATAR, float SpeedModifier)\nMultiplies the normal running, walking, and flying speed of the specified avatar.\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osCauseDamage", NULL, "kf", "osCauseDamage(key AVATAR, float damage)\nCauses damage to specified AVATAR (UUID).\n(OpenSim only.)"));
+	addFunction(new LLScriptLibraryFunction(10.f, 0.f, dummy_func, "osCauseHealing", NULL, "kf", "osCauseHealing(key AVATAR, float healing)\nCauses Healing to specified AVATAR (UUID).\n(OpenSim only.)"));
 }
 
 LLScriptLibraryFunction::LLScriptLibraryFunction(F32 eu, F32 st, void (*exec_func)(LLScriptLibData *, LLScriptLibData *, const LLUUID &), const char *name, const char *ret_type, const char *args, const char *desc, BOOL god_only)
