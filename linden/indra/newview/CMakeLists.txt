@@ -21,8 +21,8 @@ include(LLImage)
 include(LLImageJ2COJ)
 include(LLInventory)
 include(LLMath)
-include(LLMedia)
 include(LLMessage)
+include(LLPlugin)
 include(LLPrimitive)
 include(LLRender)
 include(LLUI)
@@ -31,7 +31,6 @@ include(LLWindow)
 include(LLXML)
 include(LScript)
 include(Linking)
-include(Mozlib)
 include(NDOF)
 include(GooglePerfTools)
 include(TemplateCheck)
@@ -55,8 +54,8 @@ include_directories(
     ${LLIMAGE_INCLUDE_DIRS}
     ${LLINVENTORY_INCLUDE_DIRS}
     ${LLMATH_INCLUDE_DIRS}
-    ${LLMEDIA_INCLUDE_DIRS}
     ${LLMESSAGE_INCLUDE_DIRS}
+    ${LLPLUGIN_INCLUDE_DIRS}
     ${LLPRIMITIVE_INCLUDE_DIRS}
     ${LLRENDER_INCLUDE_DIRS}
     ${LLUI_INCLUDE_DIRS}
@@ -65,7 +64,6 @@ include_directories(
     ${LLXML_INCLUDE_DIRS}
     ${LSCRIPT_INCLUDE_DIRS}
     ${LSCRIPT_INCLUDE_DIRS}/lscript_compile
-    ${GSTREAMER_INCLUDE_DIRS}
     )
 
 set(viewer_SOURCE_FILES
@@ -184,9 +182,8 @@ set(viewer_SOURCE_FILES
     llfloatergroups.cpp
     llfloaterhandler.cpp
     llfloaterhardwaresettings.cpp
-    llfloaterhtml.cpp
     llfloaterhtmlcurrency.cpp
-    llfloaterhtmlhelp.cpp
+    llfloatermediabrowser.cpp
     llfloaterhtmlsimple.cpp
     llfloaterhud.cpp
     llfloaterimagepreview.cpp
@@ -311,10 +308,12 @@ set(viewer_SOURCE_FILES
     llpanelinput.cpp
     llpanelinventory.cpp
     llpanelland.cpp
+    llpanellandaudio.cpp
     llpanellandmedia.cpp
     llpanellandobjects.cpp
     llpanellandoptions.cpp
     llpanellogin.cpp
+    llpanelmediahud.cpp
     llpanelmsgs.cpp
     llpanelnetwork.cpp
     llpanelobject.cpp
@@ -420,6 +419,8 @@ set(viewer_SOURCE_FILES
     llviewerkeyboard.cpp
     llviewerlayer.cpp
     llviewermedia.cpp
+    llviewermediafocus.cpp
+    llviewermedia_streamingaudio.cpp
     llviewermenu.cpp
     llviewermenufile.cpp
     llviewermessage.cpp
@@ -466,7 +467,7 @@ set(viewer_SOURCE_FILES
     llwearable.cpp
     llwearablelist.cpp
     llweb.cpp
-    llwebbrowserctrl.cpp
+    llmediactrl.cpp
     llwindlightremotectrl.cpp
     llwind.cpp
     llwlanimator.cpp
@@ -628,9 +629,8 @@ set(viewer_HEADER_FILES
     llfloatergroups.h
     llfloaterhandler.h
     llfloaterhardwaresettings.h
-    llfloaterhtml.h
     llfloaterhtmlcurrency.h
-    llfloaterhtmlhelp.h
+    llfloatermediabrowser.h
     llfloaterhtmlsimple.h
     llfloaterhud.h
     llfloaterimagepreview.h
@@ -754,11 +754,13 @@ set(viewer_HEADER_FILES
     llpanelinput.h
     llpanelinventory.h
     llpanelland.h
+    llpanellandaudio.h
     llpanellandmedia.h
     llpanellandobjects.h
     llpanellandoptions.h
     llpanelLCD.h
     llpanellogin.h
+    llpanelmediahud.h
     llpanelmsgs.h
     llpanelnetwork.h
     llpanelobject.h
@@ -865,6 +867,8 @@ set(viewer_HEADER_FILES
     llviewerkeyboard.h
     llviewerlayer.h
     llviewermedia.h
+    llviewermediaobserver.h
+    llviewermediafocus.h
     llviewermenu.h
     llviewermenufile.h
     llviewermessage.h
@@ -913,7 +917,7 @@ set(viewer_HEADER_FILES
     llwearable.h
     llwearablelist.h
     llweb.h
-    llwebbrowserctrl.h
+    llmediactrl.h
     llwind.h
     llwindebug.h
     llwindlightremotectrl.h
@@ -1114,6 +1118,7 @@ if (WINDOWS)
     if (INTEL_MEMOPS_LIBRARY)
       list(APPEND viewer_LIBRARIES ${INTEL_MEMOPS_LIBRARY})
     endif (INTEL_MEMOPS_LIBRARY)
+    use_prebuilt_binary(dbghelp)
 endif (WINDOWS)
 
 # Add the xui files. This is handy for searching for xui elements
@@ -1130,6 +1135,8 @@ set(viewer_XUI_FILES
 
 
     )
+list(APPEND viewer_XUI_FILES ${viewer_XUI_FILE_GLOB_LIST})
+list(SORT viewer_XUI_FILES)
 
 list(APPEND viewer_XUI_FILES ${viewer_XUI_FILE_GLOB_LIST})
 list(SORT viewer_XUI_FILES)
@@ -1164,6 +1171,7 @@ set(viewer_APPSETTINGS_FILES
     ${CMAKE_SOURCE_DIR}/../etc/message.xml
     ${CMAKE_SOURCE_DIR}/../scripts/messages/message_template.msg
     )
+
 
 source_group("App Settings" FILES ${viewer_APPSETTINGS_FILES})
 
@@ -1322,6 +1330,9 @@ if (WINDOWS)
               --touch=${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/touched.bat
         DEPENDS ${VIEWER_BINARY_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/viewer_manifest.py
         )
+
+    add_dependencies(${VIEWER_BINARY_NAME} SLPlugin media_plugin_quicktime media_plugin_webkit)
+
     if (PACKAGE)
       add_custom_target(package ALL DEPENDS ${CMAKE_CFG_INTDIR}/touched.bat)
       add_dependencies(package windows-updater windows-crash-logger)
@@ -1334,8 +1345,8 @@ target_link_libraries(${VIEWER_BINARY_NAME}
     ${LLIMAGE_LIBRARIES}
     ${LLIMAGEJ2COJ_LIBRARIES}
     ${LLINVENTORY_LIBRARIES}
-    ${LLMEDIA_LIBRARIES}
     ${LLMESSAGE_LIBRARIES}
+    ${LLPLUGIN_LIBRARIES}
     ${LLPRIMITIVE_LIBRARIES}
     ${LLRENDER_LIBRARIES}
     ${FREETYPE_LIBRARIES}
@@ -1357,7 +1368,6 @@ target_link_libraries(${VIEWER_BINARY_NAME}
     ${OPENGL_LIBRARIES}
     ${FMODWRAPPER_LIBRARY}
     ${OPENGL_LIBRARIES}
-    ${MOZLIB_LIBRARIES}
     ${JSONCPP_LIBRARIES}
     ${SDL_LIBRARY}
     ${SMARTHEAP_LIBRARY}
@@ -1439,6 +1449,8 @@ if (DARWIN)
     DEPENDS ${VIEWER_BINARY_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/viewer_manifest.py
     )
 
+  add_dependencies(${VIEWER_BINARY_NAME} SLPlugin media_plugin_gstreamer010 media_plugin_webkit)
+
   if (PACKAGE)
       add_custom_target(package ALL DEPENDS ${VIEWER_BINARY_NAME}) 
       add_dependencies(package mac-updater mac-crash-logger)
@@ -1457,6 +1469,8 @@ if (DARWIN)
           --build=${CMAKE_CURRENT_BINARY_DIR}
           --dest=${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/${product}.app
           --touch=${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/.${product}.touched
+
+  add_dependencies(${VIEWER_BINARY_NAME} SLPlugin media_plugin_quicktime media_plugin_webkit)
         DEPENDS
           ${CMAKE_CURRENT_SOURCE_DIR}/viewer_manifest.py
       )
@@ -1488,3 +1502,65 @@ if (INSTALL)
 endif (INSTALL)
 
 ADD_VIEWER_BUILD_TEST(llagentaccess viewer)
+
+# Don't do these for DARWIN or LINUX here -- they're taken care of by viewer_manifest.py
+if (WINDOWS)
+  get_target_property(BUILT_SLPLUGIN SLPlugin LOCATION)
+  add_custom_command(
+      TARGET ${VIEWER_BINARY_NAME} POST_BUILD
+      COMMAND ${CMAKE_COMMAND}
+      ARGS
+        -E
+        copy_if_different
+        ${BUILT_SLPLUGIN}
+        ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}
+      COMMENT "Copying SLPlugin executable to the runtime folder."
+      )
+
+  get_target_property(BUILT_WEBKIT_PLUGIN media_plugin_webkit LOCATION)
+    add_custom_command(
+        TARGET ${VIEWER_BINARY_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND}
+        ARGS
+          -E
+          copy_if_different
+          ${BUILT_WEBKIT_PLUGIN}
+          ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/llplugin
+        COMMENT "Copying WebKit Plugin to the runtime folder."
+        )
+
+  get_target_property(BUILT_QUICKTIME_PLUGIN media_plugin_quicktime LOCATION)
+    add_custom_command(
+        TARGET ${VIEWER_BINARY_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND}
+        ARGS
+          -E
+          copy_if_different
+          ${BUILT_QUICKTIME_PLUGIN}
+          ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/llplugin
+        COMMENT "Copying Quicktime Plugin to the runtime folder."
+        )
+
+  # Copying the mime_types.xml file to app_settings
+  set(mime_types_source "${CMAKE_SOURCE_DIR}/newview/skins/default/xui/en-us")
+  set(mime_types_dest "${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/app_settings")
+  add_custom_command(
+      TARGET ${VIEWER_BINARY_NAME} POST_BUILD
+      COMMAND ${CMAKE_COMMAND}
+      ARGS 
+	 -E
+	 copy_if_different
+	 ${mime_types_source}/mime_types_windows.xml 
+	 ${mime_types_dest}/mime_types.xml
+      COMMENT "Copying mime_types_windows.xml to mime_types.xml."
+      )
+
+endif (WINDOWS)
+
+if (DARWIN)
+# Don't do this here -- it's taken care of by viewer_manifest.py
+#  add_custom_command(TARGET ${VIEWER_BINARY_NAME} POST_BUILD
+#    COMMAND ${CMAKE_COMMAND} -E copy ${CMAKE_SOURCE_DIR}/../libraries/universal-darwin/lib_release/libllqtwebkit.dylib ${CMAKE_CURRENT_BINARY_DIR}/${CMAKE_CFG_INTDIR}/llplugin/
+#    DEPENDS ${CMAKE_SOURCE_DIR}/../libraries/universal-darwin/lib_release/libllqtwebkit.dylib
+#  )
+endif (DARWIN)
