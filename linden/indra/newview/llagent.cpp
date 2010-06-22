@@ -897,7 +897,14 @@ BOOL LLAgent::getPhantom()
 //-----------------------------------------------------------------------------
 void LLAgent::setRegion(LLViewerRegion *regionp)
 {
-	llassert(regionp);
+	// Allow setting the region to NULL -- MC
+	if (!regionp)
+	{
+		LL_DEBUGS("VOAvatar") << "Setting mRegionp to NULL" << LL_ENDL;
+		mRegionp = regionp;
+		return;
+	}
+
 	if (mRegionp != regionp)
 	{
 		// std::string host_name;

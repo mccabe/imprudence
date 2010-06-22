@@ -758,6 +758,13 @@ bool idle_startup()
 	if (STATE_LOGIN_SHOW == LLStartUp::getStartupState())
 	{
 		LL_DEBUGS("AppInit") << "Initializing Window" << LL_ENDL;
+		// Kill the region info for the agent if we have one -- MC
+		if (gAgent.getRegion())
+		{
+			LLWorld::getInstance()->updateWaterObjects();
+		}
+		gAgent.setRegion(NULL);
+
 		sAuthUris.clear();
 		sAuthUriNum = -1;
 		
@@ -1801,20 +1808,25 @@ bool idle_startup()
 
 		gAgent.initOriginGlobal(from_region_handle(first_sim_handle));
 
-		LLWorld::getInstance()->addRegion(first_sim_handle, first_sim);
-
-		LLViewerRegion *regionp = LLWorld::getInstance()->getRegionFromHandle(first_sim_handle);
-		LL_INFOS("AppInit") << "Adding initial simulator " << regionp->getOriginGlobal() << LL_ENDL;
-		
-		regionp->setSeedCapability(first_sim_seed_cap);
-		LL_DEBUGS("AppInit") << "Waiting for seed grant ...." << LL_ENDL;
-		
-		// Set agent's initial region to be the one we just created
-		// Only if we don't already have one set. We want to catch this here
-		// because setRegion calls removeRegion, which kills the viewer -- MC
-		if (!gAgent.getRegion() && gAgent.getRegion() != regionp)
+		// Just in case we get bad info somewhere along the line,
+		// only add new region info when we don't have any previously
+		// one set while logging in -- MC
+		if (!gAgent.getRegion())
 		{
+			LLWorld::getInstance()->addRegion(first_sim_handle, first_sim);
+
+			LLViewerRegion *regionp = LLWorld::getInstance()->getRegionFromHandle(first_sim_handle);
+			LL_INFOS("AppInit") << "Adding initial simulator " << regionp->getOriginGlobal() << LL_ENDL;
+			
+			regionp->setSeedCapability(first_sim_seed_cap);
+			LL_DEBUGS("AppInit") << "Waiting for seed grant ...." << LL_ENDL;
+			
+			// Set agent's initial region to be the one we just created
 			gAgent.setRegion(regionp);
+		}
+		else
+		{
+			llwarns << "Trying to set region when region isn't NULL! " << gAgent.getRegion() << llendl;
 		}
 
 		// Set agent's initial position, which will be read by LLVOAvatar when the avatar
@@ -2105,6 +2117,7 @@ bool idle_startup()
 
 		// Drop out if we can't connect -- MC
 		connecting_region_timer.start();
+		connecting_region_timer.setTimerExpirySec(10.0f);
 		LLStartUp::setStartupState( STATE_AGENT_WAIT );		// Go to STATE_AGENT_WAIT
 
 		timeout.reset();
@@ -2118,7 +2131,7 @@ bool idle_startup()
 	if (STATE_AGENT_WAIT == LLStartUp::getStartupState())
 	{
 		LL_DEBUGS("AppInitStartupState") << "STATE_AGENT_WAIT" << LL_ENDL;
-		if (connecting_region_timer.getElapsedTimeF32() > 10.0f)
+		if (connecting_region_timer.hasExpired())
 		{
 			// Bounce back to the login screen -- MC
 			LL_WARNS("AppInit") << "Bad login - can't connect to this region for some reason" << LL_ENDL;
@@ -2129,6 +2142,7 @@ bool idle_startup()
 			//this might be redundant
 			LLStartUp::setShouldAutoLogin(false);
 			show_connect_box = true;
+			connecting_region_timer.stop();
 			connecting_region_timer.reset();
 		}
 
@@ -2154,7 +2168,7 @@ bool idle_startup()
 		if (gAgentMovementCompleted)
 		{
 			LLStartUp::setStartupState( STATE_INVENTORY_SEND );
-			connecting_region_timer.reset();
+			connecting_region_timer.stop();
 		}
 
 		return FALSE;

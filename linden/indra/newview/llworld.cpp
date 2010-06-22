@@ -277,6 +277,19 @@ void LLWorld::removeRegion(const LLHost &host)
 			//LLStartUp::setLoginFailed(true);
 			LLStartUp::setStartupState(STATE_SEED_GRANTED_WAIT);
 		}
+		
+		from_region_handle(regionp->getHandle(), &x, &y);
+		llinfos << "Removing current agent region " << x << ":" << y << llendl;
+
+		mRegionList.remove(regionp);
+		mActiveRegionList.remove(regionp);
+		mCulledRegionList.remove(regionp);
+		mVisibleRegionList.remove(regionp);
+		
+		delete regionp;
+
+		updateWaterObjects();
+
 		LLNotifications::instance().add("DisconnectedFromRegion", LLSD(), LLSD(), connecting_alert_done);
 
 		return;
@@ -879,7 +892,10 @@ void LLWorld::updateWaterObjects()
 		 iter != mHoleWaterObjects.end(); ++ iter)
 	{
 		LLVOWater* waterp = *iter;
-		gObjectList.killObject(waterp);
+		if (waterp)
+		{
+			gObjectList.killObject(waterp);
+		}
 	}
 	mHoleWaterObjects.clear();
 
@@ -893,13 +909,16 @@ void LLWorld::updateWaterObjects()
 			if (!getRegionFromHandle(region_handle))
 			{
 				LLVOWater* waterp = (LLVOWater *)gObjectList.createObjectViewer(LLViewerObject::LL_VO_WATER, gAgent.getRegion());
-				waterp->setUseTexture(FALSE);
-				waterp->setPositionGlobal(LLVector3d(x + rwidth/2,
-													 y + rwidth/2,
-													 256.f+DEFAULT_WATER_HEIGHT));
-				waterp->setScale(LLVector3((F32)rwidth, (F32)rwidth, 512.f));
-				gPipeline.createObject(waterp);
-				mHoleWaterObjects.push_back(waterp);
+				if (waterp)
+				{
+					waterp->setUseTexture(FALSE);
+					waterp->setPositionGlobal(LLVector3d(x + rwidth/2,
+														 y + rwidth/2,
+														 256.f+DEFAULT_WATER_HEIGHT));
+					waterp->setScale(LLVector3((F32)rwidth, (F32)rwidth, 512.f));
+					gPipeline.createObject(waterp);
+					mHoleWaterObjects.push_back(waterp);
+				}
 			}
 		}
 	}
