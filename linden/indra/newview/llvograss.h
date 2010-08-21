@@ -96,7 +96,6 @@ public:
 	struct GrassSpeciesData
 	{
 		LLUUID	mTextureID;
-		std::string mTextureName;
 		
 		F32		mBladeSizeX;
 		F32		mBladeSizeY;
