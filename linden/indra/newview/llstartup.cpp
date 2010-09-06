@@ -2940,17 +2940,29 @@ std::string LLStartUp::loadPasswordFromDisk()
 		return hashed_password;
 	}
 
+	// UUID is 16 bytes, written into ASCII is 32 characters
+	// without trailing \0
+	const S32 HASHED_LENGTH = 32;
+
 	std::string filepath = gDirUtilp->getExpandedFilename(LL_PATH_USER_SETTINGS,
 													   "password.dat");
 	LLFILE* fp = LLFile::fopen(filepath, "rb");		/* Flawfinder: ignore */
 	if (!fp)
 	{
+#if LL_DARWIN
+		UInt32 passwordLength;
+		char *passwordData;
+		OSStatus stat = SecKeychainFindGenericPassword(NULL, 10, "Imprudence", 0, NULL, &passwordLength, (void**)&passwordData, NULL);
+		if (stat == noErr)
+		{
+			if (passwordLength == HASHED_LENGTH)
+				hashed_password.assign(passwordData, HASHED_LENGTH);
+			SecKeychainItemFreeContent(NULL, passwordData);
+		}
+#endif
 		return hashed_password;
 	}
 
-	// UUID is 16 bytes, written into ASCII is 32 characters
-	// without trailing \0
-	const S32 HASHED_LENGTH = 32;
 	U8 buffer[HASHED_LENGTH+1];
 
 	if (1 != fread(buffer, HASHED_LENGTH, 1, fp))
@@ -2974,6 +2986,10 @@ std::string LLStartUp::loadPasswordFromDisk()
 	{
 		hashed_password.assign((char*)buffer);
 	}
+#if LL_DARWIN
+	// we're migrating to the keychain
+	LLFile::remove(filepath);
+#endif
 
 	return hashed_password;
 }
@@ -2982,6 +2998,19 @@ std::string LLStartUp::loadPasswordFromDisk()
 // static
 void LLStartUp::savePasswordToDisk(const std::string& hashed_password)
 {
+#if LL_DARWIN
+	SecKeychainItemRef keychainItem;
+	OSStatus status = SecKeychainFindGenericPassword(NULL, 10, "Imprudence", 0, NULL, NULL, NULL, &keychainItem);
+	if (status == noErr)
+	{
+		SecKeychainItemModifyAttributesAndData(keychainItem, NULL, hashed_password.length(), hashed_password.c_str());
+		CFRelease(keychainItem);
+	}
+	else
+	{
+		SecKeychainAddGenericPassword(NULL, 10, "Imprudence", 0, NULL, hashed_password.length(), hashed_password.c_str(), NULL);
+	}
+#else
 	std::string filepath = gDirUtilp->getExpandedFilename(LL_PATH_USER_SETTINGS,
 													   "password.dat");
 	LLFILE* fp = LLFile::fopen(filepath, "wb");		/* Flawfinder: ignore */
@@ -3005,12 +3034,22 @@ void LLStartUp::savePasswordToDisk(const std::string& hashed_password)
 	}
 
 	fclose(fp);
+#endif
 }
 
 
 // static
 void LLStartUp::deletePasswordFromDisk()
 {
+#if LL_DARWIN
+	SecKeychainItemRef keychainItem;
+	OSStatus status = SecKeychainFindGenericPassword(NULL, 10, "Imprudence", 0, NULL, NULL, NULL, &keychainItem);
+	if (status == noErr)
+	{
+		SecKeychainItemDelete(keychainItem);
+		CFRelease(keychainItem);
+	}
+#endif
 	std::string filepath = gDirUtilp->getExpandedFilename(LL_PATH_USER_SETTINGS,
 														  "password.dat");
 	LLFile::remove(filepath);
