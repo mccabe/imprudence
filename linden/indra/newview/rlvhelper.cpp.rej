@@ -1,0 +1,7 @@
+diff a/linden/indra/newview/rlvhelper.cpp b/linden/indra/newview/rlvhelper.cpp	(rejected hunks)
+@@ -1,4 +17,5 @@
+ #include "llviewerprecompiledheaders.h"
++#include "llattachmentsmgr.h"
+ #include "llfloaterwindlight.h"
+ #include "llgesturemgr.h"
+ #include "llinventoryview.h"

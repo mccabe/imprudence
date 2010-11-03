@@ -75,6 +75,7 @@ set(viewer_SOURCE_FILES
 	lggdicdownload.cpp
 	aoremotectrl.cpp
 	chatbar_as_cmdline.cpp
+    cofmgr.cpp
     emeraldboobutils.cpp
     floaterao.cpp
     floaterbusy.cpp
@@ -101,6 +102,7 @@ set(viewer_SOURCE_FILES
     llappviewer.cpp
     llassetuploadresponders.cpp
     llassetuploadqueue.cpp
+    llattachmentsmgr.cpp
     llaudiosourcevo.cpp
     llbbox.cpp
     llbox.cpp
@@ -488,9 +490,11 @@ set(viewer_SOURCE_FILES
     rlvhandler.cpp
     rlvhelper.cpp
     rlvcommon.cpp
-    rlvmultistringsearch.cpp
+    rlvlocks.cpp
+    rlvinventory.cpp
     rlvextensions.cpp
     rlvfloaterbehaviour.cpp
+    rlvviewer2.cpp
     viewertime.cpp
     viewerversion.cpp
     )
@@ -517,6 +521,7 @@ set(viewer_HEADER_FILES
     ViewerInstall.cmake
     aoremotectrl.h
 	chatbar_as_cmdline.h
+    cofmgr.h
     emeraldboobutils.h
     floaterao.h
     floaterbusy.h
@@ -547,7 +552,8 @@ set(viewer_HEADER_FILES
     llappviewer.h
     llassetuploadresponders.h
     llassetuploadqueue.h
-    llaudiosourcevo.h
+    llassetuploadqueue.h
+    llattachmentsmgr.h
     llbbox.h
     llbox.h
     llcallbacklist.h
@@ -943,9 +949,11 @@ set(viewer_HEADER_FILES
     rlvhandler.h
     rlvhelper.h
     rlvcommon.h
-    rlvmultistringsearch.h
+    rlvlocks.h
+    rlvinventory.h
     rlvextensions.h
     rlvfloaterbehaviour.h
+    rlvviewer2.h
     VertexCache.h
     VorbisFramework.h
     viewertime.h

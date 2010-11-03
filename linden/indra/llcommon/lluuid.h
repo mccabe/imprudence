@@ -34,6 +34,7 @@
 
 #include <iostream>
 #include <set>
+#include <vector>
 #include "stdtypes.h"
 
 const S32 UUID_BYTES = 16;
@@ -131,7 +132,7 @@ public:
 
 	U8 mData[UUID_BYTES];
 };
-
+typedef std::vector<LLUUID> uuid_vec_t;
 
 // Construct
 inline LLUUID::LLUUID()

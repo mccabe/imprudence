@@ -308,28 +308,6 @@ void LLFirstUse::useMedia()
 	}
 }
 
-// [RLVa:KB] - Version: 1.23.4 | Checked: RLVa-1.0.3a (2009-09-10) | Added: RLVa-1.0.3a
-
-bool rlvHasVisibleFirstUseNotification()
-{
-	LLNotificationChannelPtr activeNotifications = LLNotifications::instance().getChannel("Notifications");
-	for (LLNotificationChannel::Iterator itNotif = activeNotifications->begin(); itNotif != activeNotifications->end(); itNotif++)
-		if ((*itNotif)->getName().find(RLV_SETTING_FIRSTUSE_PREFIX) == 0)
-			return true;
-	return false;
-}
-
-void LLFirstUse::showRlvFirstUseNotification(const std::string& strName)
-{
-	if ( (gSavedSettings.getWarning(strName)) && (!rlvHasVisibleFirstUseNotification()) )
-	{
-		gSavedSettings.setWarning(strName, FALSE);
-		LLNotifications::instance().add(strName);
-	}
-}
-
-// [/RLVa:KB]
-
 void LLFirstUse::callbackClientTags(const LLSD& notification, const LLSD& response)
 {
 	gSavedSettings.setWarning("ClientTags", FALSE);

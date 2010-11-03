@@ -299,7 +299,7 @@ void LLFloaterChat::addChatHistory(const LLChat& chat, bool log_to_file)
 		if ( (gRlvHandler.hasBehaviour(RLV_BHVR_SHOWLOC)) && (!chat.mRlvLocFiltered) && (CHAT_SOURCE_AGENT != chat.mSourceType) )
 		{
 			LLChat& rlvChat = const_cast<LLChat&>(chat);
-			gRlvHandler.filterLocation(rlvChat.mText);
+			RlvUtil::filterLocation(rlvChat.mText);
 			rlvChat.mRlvLocFiltered = TRUE;
 		}
 		if ( (gRlvHandler.hasBehaviour(RLV_BHVR_SHOWNAMES)) && (!chat.mRlvNamesFiltered) )
@@ -309,7 +309,7 @@ void LLFloaterChat::addChatHistory(const LLChat& chat, bool log_to_file)
 			if (CHAT_SOURCE_AGENT != chat.mSourceType)
 			{
 				// Filter object and system chat (names are filtered elsewhere to save ourselves an gObjectList lookup)
-				gRlvHandler.filterNames(rlvChat.mText);
+				RlvUtil::filterNames(rlvChat.mText);
 			}
 			rlvChat.mRlvNamesFiltered = TRUE;
 		}
@@ -529,7 +529,7 @@ void LLFloaterChat::addChat(const LLChat& chat,
 		{
 			LLChat& rlvChat = const_cast<LLChat&>(chat);
 			if (!from_instant_message)
-				gRlvHandler.filterLocation(rlvChat.mText);
+				RlvUtil::filterLocation(rlvChat.mText);
 			rlvChat.mRlvLocFiltered = TRUE;
 		}
 		if ( (gRlvHandler.hasBehaviour(RLV_BHVR_SHOWNAMES)) && (!chat.mRlvNamesFiltered) )
@@ -538,7 +538,7 @@ void LLFloaterChat::addChat(const LLChat& chat,
 			if ( (!from_instant_message) && (CHAT_SOURCE_AGENT != chat.mSourceType) )
 			{
 				// Filter object and system chat (names are filtered elsewhere to save ourselves an gObjectList lookup)
-				gRlvHandler.filterNames(rlvChat.mText);
+				RlvUtil::filterNames(rlvChat.mText);
 			}
 			rlvChat.mRlvNamesFiltered = TRUE;
 		}
