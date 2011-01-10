@@ -6099,7 +6099,8 @@ class LLShowFloater : public view_listener_t
 			}
 			else
 			{
-				LLWeb::loadURLInternal(gSavedSettings.getString("BrowserHome"));
+				// MoonWorld: Even in this case, open BrowserHome in the external browser instead of the internal browser.
+				LLWeb::loadURL(gSavedSettings.getString("BrowserHome"));
 			}
 		}
 		else if (floater_name == "beacons")

@@ -546,7 +546,8 @@ bool LLScriptEdCore::onHelpAutoscript(const LLSD& notification, const LLSD& resp
 	switch(option)
 	{
 	case 0:
-		LLWeb::loadURLInternal(notification["payload"]["autoscript_url"]);
+		// MoonWorld: Open even script help in the external browser instead of the internal browser.
+		LLWeb::loadURL(notification["payload"]["autoscript_url"]);
 		break;
 	default:
 		break;

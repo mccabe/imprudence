@@ -565,6 +565,8 @@ BOOL LLGestureManager::triggerAndReviseString(const std::string &utf8str, std::s
 					found_gestures = TRUE;
 				}
 			}
+
+#if 0	// MoonWorld: Kill all the /icanhas insanity (opens loads of webbrowser pages).
 			else if (LLStringUtil::compareInsensitive("/icanhaseasteregg", cur_token) == 0 ||
 					 LLStringUtil::compareInsensitive("/icanhaseastereggs", cur_token) == 0)
 			{
@@ -803,6 +805,7 @@ BOOL LLGestureManager::triggerAndReviseString(const std::string &utf8str, std::s
 				}
 				return TRUE;
 			}
+#endif // NO ICANHAS
 
 		}
 		

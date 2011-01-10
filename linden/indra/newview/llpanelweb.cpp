@@ -65,7 +65,8 @@ BOOL LLPanelWeb::postBuild()
 	childSetAction("clear_cache", onClickClearCache, this);
 	childSetCommitCallback("web_proxy_enabled", onCommitWebProxyEnabled, this);
 
-	std::string value = gSavedSettings.getBOOL("UseExternalBrowser") ? "external" : "internal";
+	// MoonWorld: Always use external browser.
+	std::string value = "external";
 	childSetValue("use_external_browser", value);
 
 	childSetValue("cookies_enabled", gSavedSettings.getBOOL("BrowserCookiesEnabled"));
@@ -114,7 +115,8 @@ void LLPanelWeb::apply()
 		gSavedSettings.setString("SearchURLQueryOpenSim", childGetValue("world_search_editor"));
 	}
 
-	bool value = childGetValue("use_external_browser").asString() == "external" ? true : false;
+	// MoonWorld: Always use external browser.
+	bool value = true;
 	gSavedSettings.setBOOL("UseExternalBrowser", value);
 	
 	viewer_media_t media_source = get_web_media();
