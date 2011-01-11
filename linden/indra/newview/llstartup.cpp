@@ -2769,7 +2769,9 @@ bool idle_startup()
 			gAOInvTimer = new AOInvTimer();
 		}
 
-		LLFirstUse::ClientTags();
+		// MoonWorld: Don't ask to download a client tag database on first use.
+		// See the setting ClientTagsListURL in settings.xml if you'd ever want to enable this.
+		//LLFirstUse::ClientTags();
 
 		// Add login location to teleport history 'teleported-into'
 		LLVector3 agent_pos=gAgent.getPositionAgent();
