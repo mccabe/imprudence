@@ -49,7 +49,7 @@ public:
 	static S32			getImpPatchVersion() { return sVersionPatch; }
 	// Returns the test version of Imprudence
 	static std::string  getImpTestVersion() { return sVersionTest; }
-	// Returns the name of the viewer. Currently always "Imprudence"
+	// Returns the name of the viewer. Currently always "MoonWorld"
 	static std::string	getImpViewerName() { return sViewerName; }
 
 	// Returns the major version of Second Life
