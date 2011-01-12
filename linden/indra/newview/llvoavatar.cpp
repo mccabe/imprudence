@@ -2158,7 +2158,8 @@ void LLVOAvatar::buildCharacter()
 			}
 		}
 
-		for (S32 pass = 0; pass < 2; pass++)
+		// MoonWorld: gAttachSubMenu is gone!
+		for (S32 pass = 0; gAttachSubMenu && pass < 2; pass++)
 		{
 			for (attachment_map_t::iterator iter = mAttachmentPoints.begin();
 				 iter != mAttachmentPoints.end(); )

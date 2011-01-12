@@ -212,6 +212,8 @@ public:
 	BOOL hasName(const char* name) const { return mName == gStringTable.checkStringEntry(name); }
 	BOOL hasName(const std::string& name) const { return mName == gStringTable.checkStringEntry(name.c_str()); }
     const std::string& getID() const { return mID; }
+	bool hasMoonWorld();
+	bool isMoonWorld(bool default_value);
 
     U32 getChildCount() const;
     // getChild returns a Null LLXMLNode (not a NULL pointer) if there is no such child.

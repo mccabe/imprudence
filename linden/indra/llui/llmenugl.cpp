@@ -2194,9 +2194,16 @@ LLView* LLMenuGL::fromXML(LLXMLNodePtr node, LLView *parent, LLUICtrlFactory *fa
 	BOOL create_jump_keys = FALSE;
 	node->getAttributeBOOL("create_jump_keys", create_jump_keys);
 
+	// If 'node' (the parent of the menu item 'child') has the attribute moonworld="true",
+	// then and only then hide all children that do NOT have that attribute.
+	bool parent_has_moonworld = node->hasMoonWorld();
 	LLXMLNodePtr child;
 	for (child = node->getFirstChild(); child.notNull(); child = child->getNextSibling())
 	{
+		if (!child->isMoonWorld(!parent_has_moonworld))	// Parent has attribute and child does not?
+		{
+			continue;									// Skip it.
+		}
 		menu->parseChildXML(child, parent, factory);
 	}
 
@@ -3985,8 +3992,15 @@ LLView* LLMenuBarGL::fromXML(LLXMLNodePtr node, LLView *parent, LLUICtrlFactory 
 	}
 
 	LLXMLNodePtr child;
+	// If the menubar 'node' (the parent of the menu item 'child') has the attribute moonworld="true",
+	// then and only then hide all children that do NOT have that attribute.
+	bool parent_has_moonworld = node->hasMoonWorld();
 	for (child = node->getFirstChild(); child.notNull(); child = child->getNextSibling())
 	{
+		if (!child->isMoonWorld(!parent_has_moonworld))	// Parent has attribute and child does not?
+		{
+			continue;									// Skip it.
+		}
 		if (child->hasName("menu"))
 		{
 			LLMenuGL *menu = (LLMenuGL*)LLMenuGL::fromXML(child, parent, factory);

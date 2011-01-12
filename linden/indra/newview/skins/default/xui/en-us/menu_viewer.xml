@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 
-<menu_bar name="Main Menu" drop_shadow="false" follows="left|top|right"
+<menu_bar name="Main Menu" drop_shadow="false" follows="left|top|right" moonworld="true"
           opaque="false" tear_off="false">
 
 
   <!-- FILE -->
 
-  <menu name="File" create_jump_keys="true" label="File"
+  <menu name="File" create_jump_keys="true" label="File" moonworld="true"
         opaque="true" tear_off="true">
     <menu label="Upload" create_jump_keys="true" name="Upload"
           opaque="true" tear_off="true">
@@ -80,19 +80,19 @@
       <on_enable function="File.EnableSaveAs" />
     </menu_item_call>
     <menu_item_separator />
-    <menu_item_call name="Take Snapshot"
+    <menu_item_call name="Take Snapshot" moonworld="true"
                     label="Take Snapshot"
                     shortcut="control|shift|S">
       <on_click function="File.TakeSnapshot" userdata="" />
     </menu_item_call>
-    <menu_item_call name="Snapshot to Disk"
+    <menu_item_call name="Snapshot to Disk" moonworld="true"
                     label="Snapshot to Disk"
                     shortcut="control|`" useMacCtrl="true">
       <on_click function="File.TakeSnapshotToDisk"
                 userdata="" />
     </menu_item_call>
-    <menu_item_separator />
-    <menu_item_call name="Quit" label="Quit"
+    <menu_item_separator moonworld="true" />
+    <menu_item_call name="Quit" label="Quit" moonworld="true"
                     shortcut="control|Q">
       <on_click function="File.Quit" userdata="" />
     </menu_item_call>
@@ -102,7 +102,7 @@
 
   <!-- EDIT -->
 
-  <menu name="Edit" create_jump_keys="true" label="Edit"
+  <menu name="Edit" create_jump_keys="true" label="Edit" moonworld="true"
         opaque="true" tear_off="true">
     <menu_item_call name="Undo" enabled="false" label="Undo"
                     shortcut="control|Z">
@@ -273,7 +273,7 @@
                 userdata="agent" />
     </menu_item_call>
     <menu_item_separator />
-    <menu_item_call name="Preferences..." label="Preferences..."
+    <menu_item_call name="Preferences..." label="Preferences..." moonworld="true"
                     shortcut="control|P">
       <on_click function="ShowFloater"
                 userdata="preferences" />
@@ -284,9 +284,9 @@
 
   <!-- VIEW -->
 
-  <menu name="View" create_jump_keys="true" label="View"
+  <menu name="View" create_jump_keys="true" label="View" moonworld="true"
         opaque="true" tear_off="true">
-    <menu_item_call name="Mouselook" label="Mouselook"
+    <menu_item_call name="Mouselook" label="Mouselook" moonworld="true"
                     shortcut="M">
       <on_click function="View.Mouselook" userdata="" />
       <on_enable function="View.EnableMouselook" />
@@ -302,7 +302,7 @@
       <on_check function="View.CheckJoystickFlycam" />
       <on_enable function="View.EnableJoystickFlycam" />
     </menu_item_check>
-    <menu_item_call name="Reset View" label="Reset View"
+    <menu_item_call name="Reset View" label="Reset View" moonworld="true"
                     shortcut="Esc">
       <on_click function="View.ResetView" userdata="" />
     </menu_item_call>
@@ -439,17 +439,17 @@
       <on_check function="View.CheckHUDAttachments" />
     </menu_item_check>
     <menu_item_separator />
-    <menu name="Zoom Level" create_jump_keys="true"
+    <menu name="Zoom Level" create_jump_keys="true" moonworld="true"
             label="Zoom Level" opaque="true" tear_off="true">
-      <menu_item_call name="Zoom In" label="Zoom In"
+      <menu_item_call name="Zoom In" label="Zoom In" moonworld="true"
                       shortcut="control|0">
         <on_click function="View.ZoomIn" userdata="" />
       </menu_item_call>
-      <menu_item_call name="Zoom Default" label="Zoom Default"
+      <menu_item_call name="Zoom Default" label="Zoom Default" moonworld="true"
                       shortcut="control|9">
         <on_click function="View.ZoomDefault" userdata="" />
       </menu_item_call>
-      <menu_item_call name="Zoom Out" label="Zoom Out"
+      <menu_item_call name="Zoom Out" label="Zoom Out" moonworld="true"
                       shortcut="control|8">
         <on_click function="View.ZoomOut" userdata="" />
       </menu_item_call>
@@ -472,7 +472,7 @@
 
   <!-- WORLD -->
 
-  <menu name="World" create_jump_keys="true" label="World"
+  <menu name="World" create_jump_keys="true" label="World" moonworld="true"
         opaque="true" tear_off="true">
     <menu_item_call name="Chat" label="Chat" shortcut="">
       <on_click function="World.Chat" userdata="" />
@@ -515,7 +515,7 @@
       <on_check function="World.CheckAutoResponse" userdata="" />
     </menu_item_check>
     <menu_item_separator />
-    <menu_item_call name="Stop Animating My Avatar" enabled="false"
+    <menu_item_call name="Stop Animating My Avatar" enabled="false" moonworld="true"
                     label="Stop Animating My Avatar">
       <on_click function="Tools.StopAllAnimations" userdata="" />
     </menu_item_call>

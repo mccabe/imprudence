@@ -1241,6 +1241,25 @@ bool LLXMLNode::getAttribute_bool(const char* name, bool& value )
     return retval;
 }
 
+// Return true if this node has the attribute "moonworld".
+bool LLXMLNode::hasMoonWorld()
+{
+	LLXMLNodePtr tmp;
+	return getAttribute("moonworld", tmp);
+}
+
+// Return true if this node has the attribute "moonworld" and it's set to true,
+// or when it doesn't have the attribute and default_value is true.
+bool LLXMLNode::isMoonWorld(bool default_value)
+{
+	if (!hasMoonWorld())
+	{
+		return default_value;
+	}
+	bool moonworld;
+	return getAttribute_bool("moonworld", moonworld) && moonworld;
+}
+
 BOOL LLXMLNode::getAttributeBOOL(const char* name, BOOL& value )
 {
 	LLXMLNodePtr node;
