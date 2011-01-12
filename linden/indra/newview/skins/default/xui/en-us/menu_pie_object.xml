@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<pie_menu name="Object Pie">
+<pie_menu name="Object Pie" moonworld="true">
 	<menu_item_call enabled="false" label="Open" mouse_opaque="true" name="Open">
 		<on_click function="Object.Open" />
 		<on_enable function="Object.EnableOpen" />
@@ -8,11 +8,11 @@
     <on_click function="Object.Buy" />
     <on_enable function="Object.EnableBuy" />
   </menu_item_call>
-	<menu_item_call enabled="false" label="Touch" mouse_opaque="true" name="Object Touch">
+	<menu_item_call enabled="false" label="Touch" mouse_opaque="true" name="Object Touch" moonworld="true">
 		<on_click function="Object.Touch" />
 		<on_enable function="Object.EnableTouch" userdata="Touch" name="EnableTouch"/>
 	</menu_item_call>
-	<menu_item_call enabled="false" label="Sit Here" mouse_opaque="true" name="Object Sit">
+	<menu_item_call enabled="false" label="Sit Here" mouse_opaque="true" name="Object Sit" moonworld="true">
 		<on_click function="Object.SitOrStand" />
 		<on_enable function="Object.EnableSitOrStand" userdata="Sit Here,Stand Up" name="EnableSitOrStand"/>
 	</menu_item_call>

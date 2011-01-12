@@ -2039,7 +2039,8 @@ void LLVOAvatar::buildCharacter()
 	//-------------------------------------------------------------------------
 	// build the attach and detach menus
 	//-------------------------------------------------------------------------
-	if (mIsSelf)
+	// MoonWorld: gAttachPieMenu is no more.
+	if (gAttachPieMenu && mIsSelf)
 	{
 		// *TODO: Translate
 		gAttachBodyPartPieMenus[0] = NULL;

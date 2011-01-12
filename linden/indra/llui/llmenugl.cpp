@@ -3242,9 +3242,17 @@ LLXMLNodePtr LLPieMenu::getXML(bool save_children) const
 
 void LLPieMenu::initXML(LLXMLNodePtr node, LLView *context, LLUICtrlFactory *factory)
 {
+	// If 'node' (the parent of the piemenu item 'child') has the attribute moonworld,
+	// then and only then hide all children that do NOT have that attribute (or have
+	// it set to false).
+	bool parent_has_moonworld = node->hasMoonWorld();
 	LLXMLNodePtr child;
 	for (child = node->getFirstChild(); child.notNull(); child = child->getNextSibling())
 	{
+		if (!child->isMoonWorld(!parent_has_moonworld))	// Parent has attribute and child does not?
+		{
+			continue;									// Skip it.
+		}
 		if (child->hasName(LL_PIE_MENU_TAG))
 		{
 			// SUBMENU
