@@ -658,11 +658,11 @@
     <key>Comment</key>
     <string>Allow LightShare (Windlight settings broadcast from the region): Never (0), Ask (1), or Always (2).</string>
     <key>Persist</key>
-    <integer>1</integer>
+    <integer>0</integer>
     <key>Type</key>
     <string>U32</string>
     <key>Value</key>
-    <integer>0</integer>
+    <integer>2</integer>
   </map>
   <key>LightShareIgnoreTimer</key>
   <map>

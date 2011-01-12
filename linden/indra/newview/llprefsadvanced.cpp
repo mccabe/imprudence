@@ -100,8 +100,9 @@ BOOL LLPrefsAdvanced::postBuild()
 	childSetValue("shadows_check", gSavedSettings.getBOOL("ShadowsEnabled"));
 	childSetValue("command_line_check", gSavedSettings.getBOOL("CmdLineChatbarEnabled"));
 
-	childSetValue("lightshare_combo",
-	              LLSD((S32)gSavedSettings.getU32("LightShareAllowed")));
+	// MoonWorld: this setting is disabled. The combo box doesn't exist anymore.
+	//childSetValue("lightshare_combo",
+	//              LLSD((S32)gSavedSettings.getU32("LightShareAllowed")));
 
 	LLComboBox* crash_behavior_combobox = getChild<LLComboBox>("crash_behavior_combobox");
 	crash_behavior_combobox->setCurrentByIndex(gCrashSettings.getS32(CRASH_BEHAVIOR_SETTING));
@@ -135,8 +136,8 @@ void LLPrefsAdvanced::apply()
 	gSavedSettings.setBOOL("LanguageIsPublic", childGetValue("language_is_public"));
 	gSavedSettings.setBOOL("AllowMUpose", childGetValue("allow_mupose"));
 	gSavedSettings.setBOOL("AutoCloseOOC", childGetValue("auto_close_ooc"));
-	gSavedSettings.setU32("LightShareAllowed",
-	                      (U32)childGetValue("lightshare_combo").asInteger());
+	// MoonWorld: this setting is disabled. The combo box doesn't exist anymore.
+	//gSavedSettings.setU32("LightShareAllowed", (U32)childGetValue("lightshare_combo").asInteger());
 
 	// Need to force a rebake when ClothingLayerProtection toggled for it take effect -- MC
 	if (gSavedSettings.getBOOL("ShowMyClientTagToOthers") != (BOOL)childGetValue("client_name_tag_broadcast_check"))

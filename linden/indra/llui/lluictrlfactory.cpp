@@ -480,7 +480,14 @@ LLView *LLUICtrlFactory::createCtrlWidget(LLPanel *parent, LLXMLNodePtr node)
 		}
 		parent = mDummyPanel;
 	}
-	LLView *ctrl = func(node, parent, this);
+	LLView *ctrl = NULL;
+	
+	// MoonWorld: Add widgets at normal, *unless* they have the attribute moonworld="false".
+	bool moonworld = true;
+	if (!node->getAttribute_bool("moonworld", moonworld) || moonworld)	// Does not have the attribute, or it is set to "true"?
+	{
+		ctrl = func(node, parent, this);
+	}
 
 	return ctrl;
 }
