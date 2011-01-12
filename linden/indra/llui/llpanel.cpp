@@ -1264,8 +1264,16 @@ LLView* LLLayoutStack::fromXML(LLXMLNodePtr node, LLView *parent, LLUICtrlFactor
 	layout_stackp->initFromXML(node, parent);
 
 	LLXMLNodePtr child;
+	// If 'node' (the layoutstack) has the attribute moonworld="true",
+	// then and only then hide all children that do NOT have that attribute.
+	bool parent_has_moonworld = node->hasMoonWorld();
 	for (child = node->getFirstChild(); child.notNull(); child = child->getNextSibling())
 	{
+		if (!child->isMoonWorld(!parent_has_moonworld))	// Parent has attribute and child does not?
+		{
+			continue;									// Skip it.
+		}
+
 		S32 min_width = 0;
 		S32 min_height = 0;
 		BOOL auto_resize = TRUE;
