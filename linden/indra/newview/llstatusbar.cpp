@@ -109,7 +109,7 @@ const F32 ICON_TIMER_EXPIRY		= 3.f; // How long the balance and health icons sho
 const F32 ICON_FLASH_FREQUENCY	= 2.f;
 const S32 TEXT_HEIGHT = 18;
 
-static void onClickParcelInfo(void*);
+//static void onClickParcelInfo(void*);
 static void onClickBalance(void*);
 static void onClickBuyCurrency(void*);
 static void onClickHealth(void*);
@@ -164,7 +164,8 @@ mSquareMetersCommitted(0)
 
 	childSetAction("buycurrency", onClickBuyCurrency, this );
 	childSetActionTextbox("BalanceText", onClickBalance );
-	childSetActionTextbox("ParcelNameText", onClickParcelInfo );
+	// MoonWorld: Don't open About Land when user clicks on parcel name in the status bar.
+	//childSetActionTextbox("ParcelNameText", onClickParcelInfo );
 
 	// TODO: Disable buying currency when connected to non-SL grids
 	// that don't support currency yet -- MC
@@ -754,12 +755,15 @@ S32 LLStatusBar::getSquareMetersLeft() const
 	return mSquareMetersCredit - mSquareMetersCommitted;
 }
 
+// MoonWorld: this function is no longer used.
+#if 0
 static void onClickParcelInfo(void* data)
 {
 	LLViewerParcelMgr::getInstance()->selectParcelAt(gAgent.getPositionGlobal());
 
 	LLFloaterLand::showInstance();
 }
+#endif
 
 static void onClickBalance(void* data)
 {

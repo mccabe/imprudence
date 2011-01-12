@@ -8,11 +8,11 @@
 	     follows="left|right|bottom" font="SansSerifSmall" h_pad="0" halign="left"
 	     height="18" hover="true" left="561" mouse_opaque="true"
 	     name="ParcelNameText" text_color="ParcelTextColor" hover_color="ParcelHoverColor"
-	     tool_tip="Name of land parcel on which you are standing. Click for About Land."
+	     tool_tip="Name of land parcel on which you are standing."
 	     v_pad="2" width="1039">
 		parcel name goes here
 	</text>
-	<text type="string" length="1" bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
+	<text type="string" length="1" bg_visible="false" border_drop_shadow_visible="false" border_visible="false" moonworld="false"
 	     bottom="-20" disabled_color="BalanceTextColor" drop_shadow_visible="true"
 	     enabled="true" follows="right|bottom" font="SansSerifSmall" h_pad="0"
 	     halign="right" height="18" left="-210" mouse_opaque="true"
@@ -20,7 +20,7 @@
 	     v_pad="2" width="76">
 		Loading...
 	</text>
-	<button bottom="-18" enabled="true" follows="right|bottom" font="SansSerifSmall"
+	<button bottom="-18" enabled="true" follows="right|bottom" font="SansSerifSmall" moonworld="false"
 	     halign="center" height="18" 
 	     image_selected="button_enabled_selected_32x128.tga"
 	     image_unselected="button_enabled_32x128.tga" label="[CURRENCY]"
@@ -82,7 +82,7 @@
 	     tool_tip="Buy this parcel" visible="false" width="16" />
 
   <!-- Totally unsexy button hack to get a sexy bevel for sexy search bevel -brent -->
-  <button bottom="-17" height="16" left="-95" width="94" 
+  <button bottom="-17" height="16" left="-95" width="94" moonworld="false"
           image_unselected="sm_rounded_corners_simple.tga"
           image_selected="sm_rounded_corners_simple.tga"
           image_hover_selected="sm_rounded_corners_simple.tga"
@@ -91,14 +91,14 @@
           image_disabled="sm_rounded_corners_simple.tga"
           label="" scale_image="true" enabled="true" mouse_opaque="false" name="menubar_search_bevel_bg"/>
 
-  <line_editor bevel_style="none" border_style="line" border_thickness="0" border_drop_shadow_visible="false" bottom="-16"
+  <line_editor bevel_style="none" border_style="line" border_thickness="0" border_drop_shadow_visible="false" bottom="-16" moonworld="false"
 	     commit_on_focus_lost="false" enabled="true" follows="right|bottom"
 	     font="SansSerifSmall" handle_edit_keys_directly="false" height="11"
 	     label="Search" left="-94" max_length="254" mouse_opaque="true"
 	     name="search_editor" select_all_on_focus_received="false"
 	     select_on_focus="false" tab_group="1" tool_tip="Inworld search"
 	     width="78" spell_check="true"/>
-	<button bottom="-17" enabled="true" follows="right|bottom" font="SansSerifSmall"
+	<button bottom="-17" enabled="true" follows="right|bottom" font="SansSerifSmall" moonworld="false"
 	     halign="center" height="16" image_unselected="status_search_btn.png" image_selected="status_search_btn_pressed.png" image_disabled_selected="status_search_btn_pressed.png" image_disabled="status_search_btn.png"
 	     label="" label_selected="" left="-16" mouse_opaque="true" name="search_btn"
 	     tool_tip="Search Second Life" width="16" scale_image="false"/>
