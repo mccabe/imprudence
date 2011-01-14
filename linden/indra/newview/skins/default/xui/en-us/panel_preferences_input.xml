@@ -24,13 +24,13 @@
        follows="left|top" font="SansSerifSmall" height="16" initial_value="false"
        label="Show avatar in mouselook" left="148" mouse_opaque="true" name="first_person_avatar_visible"
        radio_style="false" width="256" />
-  <text type="string" length="1" bg_visible="false" border_drop_shadow_visible="false" border_visible="false"
+  <text type="string" length="1" bg_visible="false" border_drop_shadow_visible="false" border_visible="false" moonworld="false"
 	     bottom_delta="-30" drop_shadow_visible="true" enabled="true" follows="left|top"
 	     font="SansSerifSmall" h_pad="0" halign="left" height="10" left="10"
 	     mouse_opaque="true" name=" Auto Fly Options:" v_pad="0" width="266">
     Auto-Fly:
   </text>
-  <check_box bottom_delta="-6" enabled="true" follows="left|top"
+  <check_box bottom_delta="-6" enabled="true" follows="left|top" moonworld="false"
 	     font="SansSerifSmall" height="16" label="Fly/land on holding up/down"
 	     left="148" mouse_opaque="true" name="automatic_fly" radio_style="false"
 	     width="178" />
