@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
 <pie_menu name="Self Pie">
-	<menu_item_call enabled="true" label="Profile..." name="Profile...">
+	<menu_item_call enabled="true" label="Profile..." name="Profile..." moonworld="false">
 		<on_click function="ShowAgentProfile" userdata="agent" />
 	</menu_item_call>
-	<menu_item_call enabled="true" label="Groups" name="Groups">
+	<menu_item_call enabled="true" label="Groups" name="Groups" moonworld="false">
 		<on_click function="ShowAgentGroups" userdata="agent" />
 	</menu_item_call>
-	<menu_item_call enabled="true" label="Inventory" name="Inventory">
+	<menu_item_call enabled="true" label="Inventory" name="Inventory" moonworld="false">
 		<on_click function="ShowFloater" userdata="inventory" />
 	</menu_item_call>
-	<menu_item_call enabled="true" label="Stand Up" name="Stand Up">
+	<menu_item_call enabled="true" label="Stand Up" name="Stand Up" moonworld="false">
 		<on_click function="Self.StandUp" userdata="" />
 		<on_enable function="Self.EnableStandUp" />
 	</menu_item_call>
-	<menu_item_call enabled="true" label="Friends" name="Friends">
+	<menu_item_call enabled="true" label="Friends" name="Friends" moonworld="false">
 		<on_click function="ShowFloater" userdata="friends" />
 	</menu_item_call>
-	<menu_item_call enabled="true" label="Gestures" name="Gestures">
+	<menu_item_call enabled="true" label="Gestures" name="Gestures" moonworld="false">
 		<on_click function="ShowFloater" userdata="gestures" />
 	</menu_item_call>
 	<pie_menu enabled="true" label="Take Off &gt;" name="Take Off &gt;">
@@ -84,16 +84,16 @@
 			</menu_item_call>
 		</pie_menu>
 		<menu_item_separator />
-		<pie_menu enabled="true" label="HUD &gt;" name="Object Detach HUD" />
+		<pie_menu enabled="true" label="HUD &gt;" name="Object Detach HUD" moonworld="false" />
 		<menu_item_separator />
-		<pie_menu enabled="true" label="Detach &gt;" name="Object Detach" />
+		<pie_menu enabled="true" label="Detach &gt;" name="Object Detach" moonworld="false" />
 		<menu_item_separator />
 		<menu_item_call enabled="true" label="Detach All" name="Detach All">
 			<on_click function="Self.RemoveAllAttachments" userdata="" />
 			<on_enable function="Self.EnableRemoveAllAttachments" />
 		</menu_item_call>
 	</pie_menu>
-	<menu_item_call enabled="true" label="Appearance..." name="Appearance...">
+	<menu_item_call enabled="true" label="Appearance..." name="Appearance..." moonworld="false">
 		<on_click function="ShowFloater" userdata="appearance" />
 		<on_enable function="Edit.EnableCustomizeAvatar" />
 	</menu_item_call>

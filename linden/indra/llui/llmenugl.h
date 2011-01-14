@@ -434,7 +434,7 @@ public:
 
 	// background colors
 	static void setDefaultBackgroundColor( const LLColor4& color ) { sDefaultBackgroundColor = color; }
-	void setBackgroundColor( const LLColor4& color ) { mBackgroundColor = color; }
+	void setBackgroundColor( const LLColor4& color ) { if (this) { mBackgroundColor = color; } }
 	const LLColor4& getBackgroundColor() const { return mBackgroundColor; }
 	void setBackgroundVisible( BOOL b )	{ mBgVisible = b; }
 	void setCanTearOff(BOOL tear_off, LLHandle<LLFloater> parent_floater_handle = LLHandle<LLFloater>());

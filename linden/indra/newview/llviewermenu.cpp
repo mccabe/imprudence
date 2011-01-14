@@ -6710,7 +6710,7 @@ public:
 protected:
 	virtual void done()
 	{
-		gPieAttachment->buildDrawLabels();
+		if (gPieAttachment) gPieAttachment->buildDrawLabels();
 		gInventory.removeObserver(this);
 		delete this;
 	}

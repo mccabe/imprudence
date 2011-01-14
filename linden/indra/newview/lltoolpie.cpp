@@ -350,6 +350,8 @@ BOOL LLToolPie::pickAndShowMenu(BOOL always_show)
 	// Spawn pie menu
 	if (mPick.mPickType == LLPickInfo::PICK_LAND)
 	{
+		if (gPieLand)	// MoonWorld: gPieLand is gone!
+		{
 		LLParcelSelectionHandle selection = LLViewerParcelMgr::getInstance()->selectParcelAt( mPick.mPosGlobal );
 		gMenuHolder->setParcelSelection(selection);
 		gPieLand->show(x, y, mPieMouseButtonDown);
@@ -359,15 +361,16 @@ BOOL LLToolPie::pickAndShowMenu(BOOL always_show)
 		effectp->setPositionGlobal(mPick.mPosGlobal);
 		effectp->setColor(LLColor4U(gAgent.getEffectColor()));
 		effectp->setDuration(0.25f);
+		}
 	}
 	else if (object && is_self)
 	{
-//		if(gPieSelf) 
-//		{
+		if(gPieSelf) 
+		{
 			//either at very early startup stage or at late quitting stage,
 			//this event is ignored.
 			gPieSelf->show(x, y, mPieMouseButtonDown);
-//		}
+		}
 
 
 	}
@@ -457,6 +460,8 @@ BOOL LLToolPie::pickAndShowMenu(BOOL always_show)
 				 (!gRlvHandler.hasBehaviour(RLV_BHVR_FARTOUCH)) )
 			{
 // [/RLVa:KB]
+				if (gPieObject)		// MoonWorld: Allow the object pie menu to be gone.
+				{
 				gPieObject->show(x, y, mPieMouseButtonDown);
 
 				// VEFFECT: ShowPie object
@@ -466,6 +471,7 @@ BOOL LLToolPie::pickAndShowMenu(BOOL always_show)
 				effectp->setPositionGlobal(mPick.mPosGlobal);
 				effectp->setColor(LLColor4U(gAgent.getEffectColor()));
 				effectp->setDuration(0.25f);
+				}
 // [RLVa:KB] - Checked: 2009-07-10 (RLVa-1.0.0g) | Added: RLVa-0.2.0f
 			}
 			else

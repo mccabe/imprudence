@@ -388,6 +388,12 @@ LLPieMenu *LLUICtrlFactory::buildPieMenu(const std::string &filename, LLView* pa
 		return NULL;
 	}
 
+	// MoonWorld: Don't show empty pie menu's.
+	if (!root->isMoonWorld(true))		// Has explicit attribute moonworld="false" ?
+	{
+		return NULL;
+	}
+
 	std::string name("menu");
 	root->getAttributeString("name", name);
 

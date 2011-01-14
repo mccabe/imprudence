@@ -3481,7 +3481,7 @@ void LLSelectMgr::deselectAllIfTooFar()
 
 	// HACK: Don't deselect when we're navigating to rate an object's
 	// owner or creator.  JC
-	if (gPieObject->getVisible())
+	if (gPieObject && gPieObject->getVisible())
 	{
 		return;
 	}
@@ -5505,12 +5505,12 @@ void dialog_refresh_all()
 
 	gFloaterTools->dirty();
 
-	if( gPieObject->getVisible() )
+	if( gPieObject && gPieObject->getVisible() )
 	{
 		gPieObject->arrange();
 	}
 
-	if( gPieAttachment->getVisible() )
+	if( gPieAttachment && gPieAttachment->getVisible() )
 	{
 		gPieAttachment->arrange();
 	}

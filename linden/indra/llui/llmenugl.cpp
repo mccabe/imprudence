@@ -3797,6 +3797,9 @@ S32 LLPieMenu::pieItemIndexFromXY(S32 x, S32 y)
 
 void LLPieMenu::show(S32 x, S32 y, BOOL mouse_down)
 {
+	// MoonWorld: Some pie menu's don't exist anymore.
+	if (!this) return;
+
 	S32 width = getRect().getWidth();
 	S32 height = getRect().getHeight();
 

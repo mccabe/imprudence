@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<pie_menu name="Land Pie">
+<pie_menu name="Land Pie" moonworld="false">
 	<menu_item_call enabled="false" label="About Land" mouse_opaque="true" name="About Land">
 		<on_click function="ShowFloater" userdata="about land" />
 	</menu_item_call>

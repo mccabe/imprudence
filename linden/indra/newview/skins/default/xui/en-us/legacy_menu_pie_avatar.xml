@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes" ?>
-<pie_menu name="Avatar Pie">
+<pie_menu name="Avatar Pie" moonworld="false">
 	<menu_item_call enabled="false" label="Profile" mouse_opaque="true" name="Profile">
 		<on_click function="ShowAgentProfile" userdata="hit object" />
 	</menu_item_call>
