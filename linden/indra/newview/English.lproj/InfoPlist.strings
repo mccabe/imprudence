@@ -1,11 +1,5 @@
 /* Localized versions of Info.plist keys */
 
-<<<<<<< HEAD
-CFBundleName = "astra";
-CFBundleShortVersionString = "astra 1.3.0";
-CFBundleGetInfoString = "astra 1.3.0";
-=======
-CFBundleName = "Imprudence";
-CFBundleShortVersionString = "Imprudence Experimental 2010.09.04";
-CFBundleGetInfoString = "Imprudence Experimental 2010.09.04";
->>>>>>> remotes/jjacek/weekly
+CFBundleName = "Astra Viewer";
+CFBundleShortVersionString = "Astra Viewer 1.0";
+CFBundleGetInfoString = "Astra Viewer 1.0";
