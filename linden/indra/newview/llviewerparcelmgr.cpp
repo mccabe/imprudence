@@ -1377,6 +1377,11 @@ void LLViewerParcelMgr::processParcelOverlay(LLMessageSystem *msg, void **user)
 			expected_size);
 
 	LLHost host = msg->getSender();
+
+	//TEMP HACK FIX ME! getRegion crashes on >256m regions?? but only here! -KOW
+	if (LLWorld::getInstance()->getRegionWidthInMeters() > 256.f)
+		return;
+
 	LLViewerRegion *region = LLWorld::getInstance()->getRegion(host);
 	if (region)
 	{
