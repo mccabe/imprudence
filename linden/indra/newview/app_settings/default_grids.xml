@@ -6,7 +6,7 @@
 
     <!-- AstraGrid -->
     <map>
-      <key>gridnick</key><string>astragrid</string>
+      <key>gridnick</key><string>AstraGrid</string>
       <key>gridname</key><string>AstraGrid</string>
       <key>platform</key><string>OpenSim</string>
       <key>loginuri</key><string>http://login.astragrid.com:8003/</string>
@@ -47,7 +47,7 @@
 
     <!-- OSGrid -->
     <map>
-      <key>gridnick</key><string>osgrid</string>
+      <key>gridnick</key><string>OSGrid</string>
       <key>gridname</key><string>OSGrid</string>
       <key>platform</key><string>OpenSim</string>
       <key>loginuri</key><string>http://login.osgrid.org/</string>
@@ -62,7 +62,7 @@
 
     <!-- Your Alternative Life -->
     <map>
-      <key>gridnick</key><string>youralternativelife</string>
+      <key>gridnick</key><string>YourAlternativeLife</string>
       <key>gridname</key><string>Your Alternative Life</string>
       <key>platform</key><string>OpenSim</string>
       <key>loginuri</key><string>http://grid01.from-ne.com:8002/</string>
@@ -78,7 +78,7 @@
 
     <!-- The New World Grid -->
     <map>
-      <key>gridnick</key><string>thenewworldgrid</string>
+      <key>gridnick</key><string>TheNewWorldGrid</string>
       <key>gridname</key><string>The New World Grid</string>
       <key>platform</key><string>OpenSim</string>
       <key>loginuri</key><string>http://grid.newworldgrid.com:8002/</string>
@@ -93,7 +93,7 @@
 
     <!-- ReactionGrid -->
     <map>
-      <key>gridnick</key><string>reactiongrid</string>
+      <key>gridnick</key><string>ReactionGrid</string>
       <key>gridname</key><string>ReactionGrid</string>
       <key>platform</key><string>OpenSim</string>
       <key>loginuri</key><string>http://reactiongrid.com:8008/</string>
@@ -108,7 +108,7 @@
     <!-- InWorldz -->
     <map>
       <key>gridname</key>  <string>Inworldz</string>
-      <key>gridnick</key>  <string>inworldz</string>
+      <key>gridnick</key>  <string>Inworldz</string>
       <key>platform</key>  <string>OpenSim</string>
       <key>loginuri</key>  <string>http://inworldz.com:8002/</string>
       <key>loginpage</key> <string>http://inworldz.com/loginscreen.php</string>
@@ -123,7 +123,7 @@
     <!-- Meta7 -->
     <map>
       <key>gridname</key>  <string>Meta7</string>
-      <key>gridnick</key>  <string>meta7</string>
+      <key>gridnick</key>  <string>Meta7</string>
       <key>platform</key>  <string>OpenSim</string>
       <key>loginuri</key>  <string>http://login.meta7.com/</string>
       <key>loginpage</key> <string>http://api.meta7.com/loginscreen.php</string>
@@ -138,7 +138,7 @@
     <!-- ScienceSim -->
     <map>
       <key>gridname</key>  <string>ScienceSim</string>
-      <key>gridnick</key>  <string>sciencesim</string>
+      <key>gridnick</key>  <string>ScienceSim</string>
       <key>platform</key>  <string>OpenSim</string>
       <key>loginuri</key>  <string>http://grid.sciencesim.com/Grid/login/</string>
       <key>loginpage</key> <string>http://island.sciencesim.com/scisim/loginscreen.php</string>
@@ -150,5 +150,28 @@
       <key>version</key>   <string>0</string>
     </map>
 
+    <map>
+        <key>gridname</key>
+            <string>AuroraGrid</string>
+        <key>gridnick</key>
+            <string>AuroraGrid</string>
+        <key>helperuri</key>
+            <string>http://login.aurora-sim.org:8002/</string>
+        <key>loginpage</key>
+            <string>http://login.aurora-sim.org/splash/</string>
+        <key>loginuri</key>
+            <string>http://login.aurora-sim.org:8002/</string>
+        <key>password</key>
+            <string />
+        <key>platform</key>
+            <string>OpenSim</string>
+        <key>register</key>
+            <string />
+        <key>support</key>
+            <string>http://aurora-sim.org/</string>
+        <key>website</key>
+            <string>http://aurora-sim.org/</string>
+    </map>
+    
   </array>
 </llsd>
