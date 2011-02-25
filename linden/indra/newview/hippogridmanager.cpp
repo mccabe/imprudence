@@ -564,7 +564,7 @@ std::string HippoGridInfo::sanitizeGridNick(std::string &gridnick)
 		char c = gridnick[i];
 		if ((c == '_') || isalnum(c)) 
 		{
-			tmp += tolower(c);
+			tmp += c;
 		} 
 		else if (isspace(c)) 
 		{
