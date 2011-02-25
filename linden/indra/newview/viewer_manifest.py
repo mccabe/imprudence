@@ -506,7 +506,7 @@ class WindowsManifest(ViewerManifest):
         grid_vars_template = """
         OutFile "%(installer_file)s"
         !define INSTFLAGS "%(flags)s"
-        !define INSTNAME   "AstraViewer"
+        !define INSTNAME   "Astra Viewer"
         !define SHORTCUT   "Astra Viewer"
         !define URLNAME   "astra"
         !define UNINSTALL_SETTINGS 1
