@@ -4,7 +4,7 @@
      title="Select a Default Grid" width="260">
   <text top="-18" follows="top|left" font="SansSerifSmall" left="10"
       halign="left" h_pad="0" v_pad="0" height="16" name="select_label">
-    Or use the Grid Manager to add a new one
+    Or use the Account Manager to add a new one
   </text>
   <scroll_list background_visible="true" bottom_delta="30" draw_border="true"
       draw_stripes="false" sort_column="0"

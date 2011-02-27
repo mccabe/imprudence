@@ -114,10 +114,10 @@
 	             handle_edit_keys_directly="true"
                select_all_on_focus_received="true"
                allow_translate="false" />
-	<check_box name="remember_check" label="Remember password"
+  <!--<check_box name="remember_check" label="Remember password"
              bottom_delta="-24" left_delta="0" height="16" width="140"
              follows="left|bottom" font="SansSerifSmall" control_name="RememberPassword" 
-	           initial_value="false" mouse_opaque="true"  />
+	           initial_value="false" mouse_opaque="true"  />-->
 
 
   <!-- GRIDS -->
@@ -134,7 +134,7 @@
              bottom_delta="-20" left_delta="0" height="20" width="120"
              follows="left|bottom" allow_text_entry="false"
              max_chars="20" mouse_opaque="true" />
-	<button name="grid_btn" label="Grid Manager"
+	<button name="grid_btn" label="Account Manager"
           bottom_delta="-24" left_delta="10" height="16" width="100"
           follows="left|bottom" font="SansSerifSmall" halign="center"
 		      mouse_opaque="true" scale_image="TRUE" />
