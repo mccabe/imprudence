@@ -326,7 +326,7 @@ void LLSurface::rebuildWater()
 		mWaterObjp = (LLVOWater *)gObjectList.createObjectViewer(LLViewerObject::LL_VO_WATER, mRegionp);
 		gPipeline.createObject(mWaterObjp);
 		LLVector3d water_pos_global = from_region_handle(mRegionp->getHandle());
-		water_pos_global += LLVector3d(128.0, 128.0, DEFAULT_WATER_HEIGHT);
+		water_pos_global += LLVector3d(mRegionp->getWidth()/2, mRegionp->getWidth()/2, DEFAULT_WATER_HEIGHT);
 		mWaterObjp->setPositionGlobal(water_pos_global);
 	}
 	//lldebugs << "Rebuilding Water Complete";
