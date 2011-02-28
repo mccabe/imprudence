@@ -1480,7 +1480,7 @@ void JCExportTracker::doexportworker(void *userdata)
 {
 	//CHECK IF WE'RE DONE
 	if(ExportTrackerFloater::mObjectSelection.empty() && ExportTrackerFloater::mObjectSelectionWaitList.empty()
-		&& (requested_inventory.empty() ||gSavedSettings.getBOOL("ExporterInventoryLater"))
+		&& (requested_inventory.empty())// ||gSavedSettings.getBOOL("ExporterInventoryLater"))
 		&& requested_properties.empty() && expected_surrogate_pos.empty())
 	{
 		gIdleCallbacks.deleteFunction(JCExportTracker::exportworker);
@@ -1707,7 +1707,7 @@ void JCExportTracker::doexportworker(void *userdata)
 		//Find an object that has completed export
 		
 		if(((export_properties==FALSE) || (*iter)->mPropertiesRecieved) && 
-			( ((export_inventory==FALSE) || (*iter)->mInventoryRecieved))|| gSavedSettings.getBOOL("ExporterInventoryLater") )
+			( ((export_inventory==FALSE) || (*iter)->mInventoryRecieved)))//|| gSavedSettings.getBOOL("ExporterInventoryLater") )
 		{
 			//we have the root properties and inventory now check all children
 			bool got_all_stuff=true;
