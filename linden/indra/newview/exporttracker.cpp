@@ -2472,7 +2472,8 @@ void JCExportTracker::actuallyprocessObjectProperties(LLMessageSystem* msg)
 			{
 				free(req);
 				requested_properties.erase(iter);
-				mPropertiesReceived++;
+				if(mStatus == EXPORTING)
+					mPropertiesReceived++;
 				break;
 			}
 		}
