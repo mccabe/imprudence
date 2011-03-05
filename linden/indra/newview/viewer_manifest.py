@@ -794,12 +794,12 @@ class DarwinManifest(ViewerManifest):
         if not self.default_channel():
             channel_standin = self.channel()
 
-        imagename="AstraViewer_" + '_'.join(self.args['version'])
+        imagename="AstraViewer_%(version_dashes)s"
 
         # MBW -- If the mounted volume name changes, it breaks the .DS_Store's background image and icon positioning.
         #  If we really need differently named volumes, we'll need to create multiple DS_Store file images, or use some other trick.
 
-        volname="Imprudence Installer"  # DO NOT CHANGE without understanding comment above
+        volname="Astra Viewer Installer"  # DO NOT CHANGE without understanding comment above
 
         if self.default_channel():
             if not self.default_grid():
