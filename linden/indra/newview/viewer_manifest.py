@@ -550,7 +550,7 @@ class WindowsManifest(ViewerManifest):
 class DarwinManifest(ViewerManifest):
     def construct(self):
         # copy over the build result (this is a no-op if run within the xcode script)
-        self.path(self.args['configuration'] + "/Imprudence.app", dst="")
+        self.path(self.args['configuration'] + "/Astra Viewer.app", dst="")
 
         if self.prefix(src="", dst="Contents"):  # everything goes in Contents
             
