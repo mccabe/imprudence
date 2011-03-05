@@ -21,7 +21,7 @@
     
     <!-- Second Life -->
     <map>
-      <key>gridnick</key><string>secondlife</string>
+      <key>gridnick</key><string>SecondLife</string>
       <key>gridname</key><string>Second Life</string>
       <key>platform</key><string>SecondLife</string>
       <key>loginuri</key><string>https://login.agni.lindenlab.com/cgi-bin/login.cgi</string>

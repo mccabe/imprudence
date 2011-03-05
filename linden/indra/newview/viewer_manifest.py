@@ -223,7 +223,7 @@ class WindowsManifest(ViewerManifest):
       	# need to get the kdu dll from any of the build directories as well
         try:
             self.path(self.find_existing_file('../llkdu/%s/llkdu.dll' % self.args['configuration'],
-                '../../libraries/i686-win32/lib/release/llkdu.dll'), 
+                'llkdu.dll'), 
                   dst='llkdu.dll')
             pass
         except:
