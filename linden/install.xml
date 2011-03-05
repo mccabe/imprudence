@@ -688,7 +688,7 @@
         <key>copyright</key>
         <string>Copyright (C) 1995-1997 Peter Mattis, Spencer Kimball and Josh MacDonald
 atk: Copyright 2001 Sun Microsystems Inc.
-cairo: Copyright © 2002 University of Southern California, Copyright © 2005 Red Hat, Inc.
+cairo: Copyright (C) 2002 University of Southern California, Copyright (C) 2005 Red Hat, Inc.
 
 </string>
         <key>description</key>
