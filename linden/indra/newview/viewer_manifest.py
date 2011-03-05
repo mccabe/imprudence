@@ -565,10 +565,10 @@ class DarwinManifest(ViewerManifest):
                 self.path("libopenal.1.dylib")
                 self.path("libalut.0.dylib")
 
-                self.path("libglib-2.0.dylib")
-                self.path("libgmodule-2.0.dylib")
-                self.path("libgobject-2.0.dylib")
-                self.path("libgthread-2.0.dylib")
+                # self.path("libglib-2.0.dylib")
+                # self.path("libgmodule-2.0.dylib")
+                # self.path("libgobject-2.0.dylib")
+                # self.path("libgthread-2.0.dylib")
                 
                 # self.path("libgstreamer-0.10.dylib")
                 # self.path("libgstapp-0.10.dylib")
@@ -589,15 +589,15 @@ class DarwinManifest(ViewerManifest):
                 # self.path("libgsttag-0.10.dylib")
                 # self.path("libgstvideo-0.10.dylib")
 
-                self.path("libxml2.2.dylib")
+                # self.path("libxml2.2.dylib")
                 # self.path("libfaad.2.dylib")
                 # self.path("libFLAC.8.dylib")
-                self.path("libintl.3.dylib")
+                # self.path("libintl.3.dylib")
                 self.path("libjpeg.62.dylib")
                 self.path("libpng12.0.dylib")
-                self.path("libneon.27.dylib")
+                # self.path("libneon.27.dylib")
                 self.path("libogg.0.dylib")
-                self.path("liboil-0.3.0.dylib")
+                # self.path("liboil-0.3.0.dylib")
                 self.path("libopenjpeg.1.4.dylib")
                 # self.path("libtheora.0.dylib")
                 self.path("libvorbis.0.dylib")
@@ -786,7 +786,7 @@ class DarwinManifest(ViewerManifest):
         if ("package" in self.args['actions'] or 
             "unpacked" in self.args['actions']):
             self.run_command('strip -S "%(viewer_binary)s"' %
-                             { 'viewer_binary' : self.dst_path_of('Contents/MacOS/Second Life')})
+                             { 'viewer_binary' : self.dst_path_of('Contents/MacOS/Astra Viewer')})
 
 
     def package_finish(self):

@@ -1472,16 +1472,16 @@ if (LINUX)
 endif (LINUX)
 
 if (DARWIN)
-  set(product "Imprudence")
+  set(product "Astra Viewer")
   set_target_properties(
     ${VIEWER_BINARY_NAME}
     PROPERTIES
     OUTPUT_NAME "${product}"
     MACOSX_BUNDLE_INFO_STRING "info string - localize me"
     MACOSX_BUNDLE_ICON_FILE "viewer.icns"
-    MACOSX_BUNDLE_GUI_IDENTIFIER "Imprudence"
+    MACOSX_BUNDLE_GUI_IDENTIFIER "Astra Viewer"
     MACOSX_BUNDLE_LONG_VERSION_STRING "ververver"
-    MACOSX_BUNDLE_BUNDLE_NAME "Imprudence"
+    MACOSX_BUNDLE_BUNDLE_NAME "Astra Viewer"
     MACOSX_BUNDLE_SHORT_VERSION_STRING "asdf"
     MACOSX_BUNDLE_BUNDLE_VERSION "asdf"
     MACOSX_BUNDLE_COPYRIGHT "copyright linden lab 2007 - localize me and run me through a legal wringer"
