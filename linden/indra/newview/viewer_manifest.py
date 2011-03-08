@@ -333,7 +333,7 @@ class WindowsManifest(ViewerManifest):
             self.end_prefix()
 
         # The config file name needs to match the exe's name.
-        self.path(src="Imprudence.exe.config", dst=self.final_exe() + ".config")
+        self.path(src="%s/imprudence-bin.exe.config" % self.args['configuration'], dst=self.final_exe() + ".config")
 
         # We need this one too, so that llkdu loads at runtime - DEV-41194
         #self.path(src="%s/imprudence-bin.exe.config" % self.args['configuration'], dst="llkdu.dll.2.config")
