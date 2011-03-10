@@ -192,7 +192,9 @@ void LLViewerParcelMgr::init(F32 region_size)
 	mBlockedImage = gImageList.getImageFromFile("noentrylines.j2c");
 	mPassImage = gImageList.getImageFromFile("noentrypasslines.j2c");
 
-	S32 overlay_size = mParcelsPerEdge * mParcelsPerEdge / PARCEL_OVERLAY_CHUNKS;
+    S32 mParcelOverLayChunks = region_size * region_size / (128 * 128);
+
+	S32 overlay_size = mParcelsPerEdge * mParcelsPerEdge / mParcelOverLayChunks;
 	sPackedOverlay = new U8[overlay_size];
 
 	mAgentParcelOverlay = new U8[mParcelsPerEdge * mParcelsPerEdge];
@@ -1377,10 +1379,6 @@ void LLViewerParcelMgr::processParcelOverlay(LLMessageSystem *msg, void **user)
 			expected_size);
 
 	LLHost host = msg->getSender();
-
-	//TEMP HACK FIX ME! getRegion crashes on >256m regions?? but only here! -KOW
-	if (LLWorld::getInstance()->getRegionWidthInMeters() > 256.f)
-		return;
 
 	LLViewerRegion *region = LLWorld::getInstance()->getRegion(host);
 	if (region)
