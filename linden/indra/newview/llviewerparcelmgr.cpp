@@ -137,6 +137,9 @@ LLViewerParcelMgr::LLViewerParcelMgr()
 	mHoverParcel = new LLParcel();
 	mCollisionParcel = new LLParcel();
 
+	mBlockedImage = gImageList.getImageFromFile("noentrylines.j2c");
+	mPassImage = gImageList.getImageFromFile("noentrypasslines.j2c");
+
 	init(256);
 }
 
@@ -188,9 +191,6 @@ void LLViewerParcelMgr::init(F32 region_size)
 
 	mCollisionSegments = new U8[(mParcelsPerEdge+1)*(mParcelsPerEdge+1)];
 	resetSegments(mCollisionSegments);
-
-	mBlockedImage = gImageList.getImageFromFile("noentrylines.j2c");
-	mPassImage = gImageList.getImageFromFile("noentrypasslines.j2c");
 
     S32 mParcelOverLayChunks = region_size * region_size / (128 * 128);
 
