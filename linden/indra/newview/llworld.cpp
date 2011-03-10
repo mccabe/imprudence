@@ -1262,9 +1262,9 @@ void process_enable_simulator(LLMessageSystem *msg, void **user_data)
 
 	//Aurora-Sim feature, custom region sizes - Patrick Sapinski (2/7/2011)
 	U32 region_size_x = 256;
-	msg->getU32(_PREHASH_SimulatorInfo, "RegionSizeX", region_size_x);
+	msg->getU32Fast(_PREHASH_SimulatorInfo, _PREHASH_RegionSizeX, region_size_x);
 	U32 region_size_y = 256;
-	msg->getU32(_PREHASH_SimulatorInfo, "RegionSizeY", region_size_y);
+	msg->getU32Fast(_PREHASH_SimulatorInfo, _PREHASH_RegionSizeY, region_size_y);
 
 	//and a little hack for Second Life compatibility
 	if (region_size_y == 0 || region_size_x == 0)
