@@ -3547,6 +3547,12 @@ void process_teleport_finish(LLMessageSystem* msg, void**)
 		region_size_y = 256;
 	}
 
+	if (region_size_x == 0 || region_size_y == 0)
+	{
+		region_size_x = 256;
+		region_size_y = 256;
+	}
+
 	// update home location if we are teleporting out of prelude - specific to teleporting to welcome area 
 	if((teleport_flags & TELEPORT_FLAGS_SET_HOME_TO_TARGET)
 	   && (!gAgent.isGodlike()))
