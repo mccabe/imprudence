@@ -741,6 +741,20 @@ class DarwinManifest(ViewerManifest):
                                 "libexpat.0.5.0.dylib"):
                     self.path(os.path.join(libdir, libfile), libfile)
 
+                # need to get the kdu dll from any of the build directories as well
+                try:
+                    self.path(self.find_existing_file('../llkdu/%s/libllkdu.dylib' % self.args['configuration'],
+                        '../../build-darwin-universal-Release/llkdu/Release/libllkdu.dylib',
+                        "../../libraries/universal-darwin/lib_release/libllkdu.dylib"),
+                        dst='libllkdu.dylib')
+                    pass
+                except:
+                    print "Skipping libllkdu.dylib"
+                    pass
+                
+                #libfmodwrapper.dylib
+                self.path(self.args['configuration'] + "/libfmodwrapper.dylib", "libfmodwrapper.dylib")
+                
                 # our apps
                 # self.path("../mac_crash_logger/" + self.args['configuration'] + "/mac-crash-logger.app", "mac-crash-logger.app")
                 # self.path("../mac_updater/" + self.args['configuration'] + "/mac-updater.app", "mac-updater.app")
