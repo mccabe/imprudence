@@ -192,9 +192,9 @@ void LLViewerParcelMgr::init(F32 region_size)
 	mCollisionSegments = new U8[(mParcelsPerEdge+1)*(mParcelsPerEdge+1)];
 	resetSegments(mCollisionSegments);
 
-    S32 mParcelOverLayChunks = region_size * region_size / (128 * 128);
+    F32 mParcelOverLayChunks = region_size * region_size / (128 * 128);
 
-	S32 overlay_size = mParcelsPerEdge * mParcelsPerEdge / mParcelOverLayChunks;
+	S32 overlay_size = (S32)(mParcelsPerEdge * mParcelsPerEdge / mParcelOverLayChunks);
 	sPackedOverlay = new U8[overlay_size];
 
 	mAgentParcelOverlay = new U8[mParcelsPerEdge * mParcelsPerEdge];
