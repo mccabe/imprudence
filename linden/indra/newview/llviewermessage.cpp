@@ -3535,6 +3535,7 @@ void process_teleport_finish(LLMessageSystem* msg, void**)
 	std::string seedCap;
 	msg->getStringFast(_PREHASH_Info, _PREHASH_SeedCapability, seedCap);
 
+	//Aurora-Sim feature, custom region sizes - Patrick Sapinski (2/7/2011)
 	U32 region_size_x = 256;
 	msg->getU32Fast(_PREHASH_Info, _PREHASH_RegionSizeX, region_size_x);
 	U32 region_size_y = 256;
@@ -3880,16 +3881,9 @@ void process_crossed_region(LLMessageSystem* msg, void**)
 
 	//Aurora-Sim feature, custom region sizes - Patrick Sapinski (2/7/2011)
 	U32 region_size_x = 256;
-	msg->getU32(_PREHASH_RegionData, _PREHASH_RegionSizeX, region_size_x);
+	msg->getU32(_PREHASH_RegionData, "RegionSizeX", region_size_x);
 	U32 region_size_y = 256;
-	msg->getU32(_PREHASH_RegionData, _PREHASH_RegionSizeY, region_size_y);
-
-	//and a little hack for Second Life compatibility
-	if (region_size_y == 0 || region_size_x == 0)
-	{
-		region_size_x = 256;
-		region_size_y = 256;
-	}
+	msg->getU32(_PREHASH_RegionData, "RegionSizeY", region_size_y);
 
 	send_complete_agent_movement(sim_host);
 

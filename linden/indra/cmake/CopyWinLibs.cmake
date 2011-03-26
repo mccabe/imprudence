@@ -255,7 +255,7 @@ set(all_targets ${all_targets} ${out_targets})
 # *TODO - Adapt this to support VC9
 FIND_PATH(debug_msvc8_redist_path msvcr80d.dll
     PATHS
-     [HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\VisualStudio\\8.0\\Setup\\VC;ProductDir]/redist/Debug_NonRedist/x86/Microsoft.VC80.DebugCRT
+     [HKEY_LOCAL_MACHINE\\SOFTWARE\\Wow6432Node\\Microsoft\\VisualStudio\\8.0\\Setup\\VC;ProductDir]/redist/Debug_NonRedist/x86/Microsoft.VC80.DebugCRT
     NO_DEFAULT_PATH
     NO_DEFAULT_PATH
     )
@@ -285,14 +285,14 @@ if(EXISTS ${debug_msvc8_redist_path})
           ${CMAKE_CURRENT_SOURCE_DIR}/ImprudenceDebug.exe.config
           ${debug_appconfig_file}
         DEPENDS ${CMAKE_CURRENT_BINARY_DIR}/Debug/Microsoft.VC80.DebugCRT.manifest
-        COMMENT "Creating debug app config file"
+        COMMENT "Creating debug app config file ${debug_appconfig_file}"
         )
 
 endif (EXISTS ${debug_msvc8_redist_path})
 
 FIND_PATH(release_msvc8_redist_path msvcr80.dll
     PATHS
-     [HKEY_LOCAL_MACHINE\\SOFTWARE\\Microsoft\\VisualStudio\\8.0\\Setup\\VC;ProductDir]/redist/x86/Microsoft.VC80.CRT
+     [HKEY_LOCAL_MACHINE\\SOFTWARE\\Wow6432Node\\Microsoft\\VisualStudio\\8.0\\Setup\\VC;ProductDir]/redist/x86/Microsoft.VC80.CRT
     NO_DEFAULT_PATH
     NO_DEFAULT_PATH
     )

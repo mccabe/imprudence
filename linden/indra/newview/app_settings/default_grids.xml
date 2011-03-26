@@ -9,8 +9,8 @@
       <key>gridnick</key><string>AstraGrid</string>
       <key>gridname</key><string>AstraGrid</string>
       <key>platform</key><string>OpenSim</string>
-      <key>loginuri</key><string>http://login.astragrid.com:8003/</string>
-      <key>loginpage</key><string>http://astragrid.com/loginscreen.php</string>
+      <key>loginuri</key><string>http://login.astragrid.com:8002/</string>
+      <key>loginpage</key><string>http://astragrid.com/loginscreen/</string>
       <key>helperuri</key><string>http://astragrid.com/index.php?page=help</string>
       <key>website</key><string>http://astragrid.com/</string>
       <key>support</key><string>http://astragrid.com/index.php?page=support</string>
@@ -150,6 +150,7 @@
       <key>version</key>   <string>0</string>
     </map>
 
+    <!-- AuroraGrid -->
     <map>
         <key>gridname</key>
             <string>AuroraGrid</string>

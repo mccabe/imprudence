@@ -321,7 +321,7 @@ class WindowsManifest(ViewerManifest):
 
         # These need to be installed as a SxS assembly, currently a 'private' assembly.
         # See http://msdn.microsoft.com/en-us/library/ms235291(VS.80).aspx
-        if self.prefix(src="", dst=""):
+        if self.prefix(src=self.args['configuration'], dst=""):
             if self.args['configuration'] == 'Debug':
                 self.path("msvcr80d.dll")
                 self.path("msvcp80d.dll")
@@ -333,7 +333,7 @@ class WindowsManifest(ViewerManifest):
             self.end_prefix()
 
         # The config file name needs to match the exe's name.
-        self.path(src="Imprudence.exe.config", dst=self.final_exe() + ".config")
+        self.path(src="%s/imprudence-bin.exe.config" % self.args['configuration'], dst=self.final_exe() + ".config")
 
         # We need this one too, so that llkdu loads at runtime - DEV-41194
         #self.path(src="%s/imprudence-bin.exe.config" % self.args['configuration'], dst="llkdu.dll.2.config")
@@ -741,6 +741,20 @@ class DarwinManifest(ViewerManifest):
                                 "libexpat.0.5.0.dylib"):
                     self.path(os.path.join(libdir, libfile), libfile)
 
+                # need to get the kdu dll from any of the build directories as well
+                try:
+                    self.path(self.find_existing_file('../llkdu/%s/libllkdu.dylib' % self.args['configuration'],
+                        '../../build-darwin-universal-Release/llkdu/Release/libllkdu.dylib',
+                        "../../libraries/universal-darwin/lib_release/libllkdu.dylib"),
+                        dst='libllkdu.dylib')
+                    pass
+                except:
+                    print "Skipping libllkdu.dylib"
+                    pass
+                
+                #libfmodwrapper.dylib
+                self.path(self.args['configuration'] + "/libfmodwrapper.dylib", "libfmodwrapper.dylib")
+                
                 # our apps
                 # self.path("../mac_crash_logger/" + self.args['configuration'] + "/mac-crash-logger.app", "mac-crash-logger.app")
                 # self.path("../mac_updater/" + self.args['configuration'] + "/mac-updater.app", "mac-updater.app")

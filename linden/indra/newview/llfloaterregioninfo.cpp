@@ -183,13 +183,17 @@ BOOL LLFloaterRegionInfo::postBuild()
 	mTab->addTabPanel(panel, panel->getLabel(), TRUE);
 
 	// We only use this panel on Aurora-based sims -- MC
-	std::string url = gAgent.getRegion()->getCapability("DispatchOpenRegionSettings");
-	if (!url.empty())
+	LLViewerRegion* region = gAgent.getRegion();
+	if (region)
 	{
-		panel = new LLPanelRegionOpenSettingsInfo;
-		mInfoPanels.push_back(panel);
-		LLUICtrlFactory::getInstance()->buildPanel(panel, "panel_region_open_region_settings.xml");
-		mTab->addTabPanel(panel, panel->getLabel(), FALSE);
+		std::string url = region->getCapability("DispatchOpenRegionSettings");
+		if (!url.empty())
+		{
+			panel = new LLPanelRegionOpenSettingsInfo;
+			mInfoPanels.push_back(panel);
+			LLUICtrlFactory::getInstance()->buildPanel(panel, "panel_region_open_region_settings.xml");
+			mTab->addTabPanel(panel, panel->getLabel(), FALSE);
+		}
 	}
 
 	panel = new LLPanelRegionDebugInfo;
@@ -2822,6 +2826,9 @@ LLPanelEstateCovenant::LLPanelEstateCovenant()
 // virtual 
 bool LLPanelEstateCovenant::refreshFromRegion(LLViewerRegion* region)
 {
+	if (!region)
+		return FALSE;
+
 	LLTextBox* region_name = getChild<LLTextBox>("region_name_text");
 	if (region_name)
 	{

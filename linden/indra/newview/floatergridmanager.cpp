@@ -143,7 +143,6 @@ void FloaterGridManager::refreshGrids()
 {
 	LLScrollListCtrl *grids = FloaterGridManager::getInstance()->getChild<LLScrollListCtrl>("grid_selector");
 	std::string lastSelectedItem;
-	LLSD element;
 
 	if (grids->getFirstSelected())
 	{
@@ -158,6 +157,7 @@ void FloaterGridManager::refreshGrids()
 		// There's no reason why empty grids nicks should be in this list, ugh
 		if (!grid_nick.empty() && grid_nick != gHippoGridManager->getCurrentGridNick()) 
 		{
+			LLSD element;
 			element["id"] = grid_nick;
 			element["columns"][0]["column"] = "grid";
 			element["columns"][0]["type"] = "text";
@@ -171,12 +171,24 @@ void FloaterGridManager::refreshGrids()
 	// but leaving this as the current behavior for now
 	if (!gHippoGridManager->getCurrentGridNick().empty()) 
 	{
+		LLSD element;
 		element["id"] = gHippoGridManager->getCurrentGridNick();
 		element["columns"][0]["column"] = "grid";
 		element["columns"][0]["type"] = "text";
 		element["columns"][0]["font-style"] = "BOLD";
 		element["columns"][0]["value"] = gHippoGridManager->getCurrentGridNick();
 		grids->addElement(element, ADD_TOP);
+	}
+
+	// TODO: get rid of all this state junk
+	if ((FloaterGridManager::getInstance()->getState() == ADD_NEW) || (FloaterGridManager::getInstance()->getState() == ADD_COPY)) 
+	{
+		LLSD element;
+		element["id"] = "new";
+		element["columns"][0]["column"] = "grid";
+		element["columns"][0]["type"] = "text";
+		element["columns"][0]["value"] = "new";
+		grids->addElement("element", ADD_BOTTOM);
 	}
 
 	// Reselect the item if we had one selected
@@ -187,12 +199,6 @@ void FloaterGridManager::refreshGrids()
 	else
 	{
 		grids->selectItemByLabel(lastSelectedItem);
-	}
-
-	// TODO: get rid of all this state junk
-	if ((FloaterGridManager::getInstance()->getState() == ADD_NEW) || (FloaterGridManager::getInstance()->getState() == ADD_COPY)) 
-	{
-		grids->addElement("<new>", ADD_BOTTOM);
 	}
 
 	//if (selectIndex >= 0) 
@@ -473,7 +479,18 @@ void FloaterGridManager::apply()
 	} 
 	else if ((mState == ADD_NEW) || (mState == ADD_COPY)) 
 	{
-		if (!createNewGrid()) return;
+		if (createNewGrid()) 
+		{
+			setState(NORMAL);
+			//LLScrollListCtrl *grids = FloaterGridManager::getInstance()->getChild<LLScrollListCtrl>("grid_selector");
+			//grids->selectItemByLabel(childGetValue("gridnick"));
+		} 
+		else 
+		{
+			//LLScrollListCtrl *grids = self->getChild<LLScrollListCtrl>("grid_selector");
+			//grids->setCurrentByIndex(grids->getItemCount() - 1);
+			return;
+		}
 	} 
 	else 
 	{
@@ -516,16 +533,16 @@ void FloaterGridManager::onSelectGrid(LLUICtrl* ctrl, void* data)
 	} 
 	else if ((self->getState() == ADD_NEW) || (self->getState() == ADD_COPY)) 
 	{
-		if (self->createNewGrid()) 
-		{
-			self->setState(NORMAL);
-		} 
-		else 
-		{
+		//if (self->createNewGrid()) 
+		//{
+			//self->setState(NORMAL);
+		//} 
+		//else 
+		//{
 			//LLScrollListCtrl *grids = self->getChild<LLScrollListCtrl>("grid_selector");
 			//grids->setCurrentByIndex(grids->getItemCount() - 1);
-			return;
-		}
+			//return;
+		//}
 	} 
 	else 
 	{
@@ -555,6 +572,8 @@ void FloaterGridManager::onClickAdd(void* data)
 	FloaterGridManager* self = (FloaterGridManager*)data;
 	self->setState(ADD_NEW);
 	self->refreshGrids();
+	LLScrollListCtrl *grids = FloaterGridManager::getInstance()->getChild<LLScrollListCtrl>("grid_selector");
+	grids->selectFirstItem();
 }
 
 
