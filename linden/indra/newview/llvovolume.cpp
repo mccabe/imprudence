@@ -93,6 +93,7 @@ LLVOVolume::LLVOVolume(const LLUUID &id, const LLPCode pcode, LLViewerRegion *re
 	mRelativeXformInvTrans.setIdentity();
 
 	mLOD = MIN_LOD;
+	mSculptLevel = -2;
 	mTextureAnimp = NULL;
 	mVObjRadius = LLVector3(1,1,0.5f).length();
 	mNumFaces = 0;
@@ -506,8 +507,9 @@ void LLVOVolume::updateTextureVirtualSize()
 	
 	if (isSculpted())
 	{
-		updateSculptTexture();
-
+		LLSculptParams *sculpt_params = (LLSculptParams *)getParameterEntry(LLNetworkData::PARAMS_SCULPT);
+		LLUUID id =  sculpt_params->getSculptTexture(); 
+		mSculptTexture = gImageList.getImage(id);
 		if (mSculptTexture.notNull())
 		{
 			mSculptTexture->setBoostLevel(llmax((S32)mSculptTexture->getBoostLevel(),
@@ -530,14 +532,14 @@ void LLVOVolume::updateTextureVirtualSize()
 				}
 			}
 	
-			S32 texture_discard = mSculptTexture->getDiscardLevel(); //try to match the texture
-			S32 current_discard = getVolume() ? getVolume()->getSculptLevel() : -2;
+			S32 texture_discard = mSculptTexture->getCachedRawImageLevel(); //try to match the texture
+			S32 current_discard = mSculptLevel;
 
 			if (texture_discard >= 0 && //texture has some data available
 				(texture_discard < current_discard || //texture has more data than last rebuild
 				current_discard < 0)) //no previous rebuild
 			{
-				gPipeline.markRebuild(mDrawable, LLDrawable::REBUILD_VOLUME, FALSE);
+				markForUpdate(FALSE);
 				mSculptChanged = TRUE;
 			}
 
@@ -685,54 +687,25 @@ BOOL LLVOVolume::setVolume(const LLVolumeParams &volume_params, const S32 detail
 			mVolumeImpl->onSetVolume(volume_params, detail);
 		}
 		
-		updateSculptTexture();
 		if (isSculpted())
 		{
+			mSculptTexture = gImageList.getImage(volume_params.getSculptID());
 			if (mSculptTexture.notNull())
 			{
 				sculpt();
+				mSculptLevel = getVolume()->getSculptLevel();
 				mSculptSurfaceArea = getVolume()->sculptGetSurfaceArea();
 			}
 		}
 		else
 		{
+			mSculptTexture = NULL;
 			mSculptSurfaceArea = 0.0;
 		}
 
 		return TRUE;
 	}
 	return FALSE;
-}
-
-
-void LLVOVolume::updateSculptTexture()
-{
-	LLPointer<LLViewerImage> old_sculpt = mSculptTexture;
-	if (isSculpted())
-	{
-		LLSculptParams *sculpt_params = (LLSculptParams *)getParameterEntry(LLNetworkData::PARAMS_SCULPT);
-		LLUUID id =  sculpt_params->getSculptTexture();
-		if (id.notNull())
-		{
-			mSculptTexture = gImageList.getImage(id);
-		}
-	}
-	else
-	{
-		mSculptTexture = NULL;
-	}
-
-	if (mSculptTexture != old_sculpt)
-	{
-		if (old_sculpt.notNull())
-		{
-			old_sculpt->removeVolume(this);
-		}
-		if (mSculptTexture.notNull())
-		{
-			mSculptTexture->addVolume(this);
-		}
-	}
 }
 
 
@@ -746,7 +719,7 @@ void LLVOVolume::sculpt()
 		S8 sculpt_components = 0;
 		const U8* sculpt_data = NULL;
 	
-		S32 discard_level = mSculptTexture->getDiscardLevel() ;
+		S32 discard_level = mSculptTexture->getCachedRawImageLevel() ;
 		LLImageRaw* raw_image = mSculptTexture->getCachedRawImage() ;
 		
 		S32 max_discard = mSculptTexture->getMaxDiscardLevel();
@@ -790,7 +763,7 @@ void LLVOVolume::sculpt()
 		}
 		getVolume()->sculpt(sculpt_width, sculpt_height, sculpt_components, sculpt_data, discard_level);
 
-		//notify rebuild any other VOVolumes that reference this sculpty volume
+		/*//notify rebuild any other VOVolumes that reference this sculpty volume
 		for (S32 i = 0; i < mSculptTexture->getNumVolumes(); ++i)
 		{
 			LLVOVolume* volume = (*(mSculptTexture->getVolumeList()))[i];
@@ -798,7 +771,7 @@ void LLVOVolume::sculpt()
 			{
 				gPipeline.markRebuild(volume->mDrawable, LLDrawable::REBUILD_GEOMETRY, FALSE);
 			}
-		}
+		}*/
 	}
 }
 
