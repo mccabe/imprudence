@@ -184,6 +184,7 @@ Function .onInstSuccess
 	MessageBox MB_YESNO \
 	$(InstSuccesssQuestion) /SD IDYES IDNO NoReadme
 		; Assumes SetOutPath $INSTDIR
+		IfSilent +2
 		Exec '"$INSTDIR\$INSTEXE" $INSTFLAGS'
 	NoReadme:
 FunctionEnd
@@ -505,7 +506,7 @@ FunctionEnd
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 Function un.CloseSecondLife
   Push $0
-  FindWindow $0 "Imprudence" ""
+  FindWindow $0 "Astra Viewer" ""
   IntCmp $0 0 DONE
   MessageBox MB_OKCANCEL $(CloseSecondLifeUnInstMB) IDOK CLOSE IDCANCEL CANCEL_UNINSTALL
 
@@ -517,7 +518,7 @@ Function un.CloseSecondLife
     SendMessage $0 16 0 0
 
   LOOP:
-	  FindWindow $0 "Imprudence" ""
+	  FindWindow $0 "Astra Viewer" ""
 	  IntCmp $0 0 DONE
 	  Sleep 500
 	  Goto LOOP
@@ -868,6 +869,7 @@ Function .onInit
 	ReadRegStr $0 HKEY_LOCAL_MACHINE "SOFTWARE\Linden Research, Inc.\${INSTNAME}" "InstallerLanguage"
 	StrCpy $LANGUAGE $0
 
+	IfSilent +16
 	Push ""
 	Push ${LANG_ENGLISH}
 	Push English
@@ -909,9 +911,9 @@ StrCpy $INSTPROG "${INSTNAME}"
 StrCpy $INSTEXE "${INSTEXE}"
 StrCpy $INSTSHORTCUT "${SHORTCUT}"
 
-IfSilent +2
+;IfSilent +2
 Goto NOT_SILENT
-  Call CheckStartupParams                 ; Figure out where, what and how to install.
+;  Call CheckStartupParams                 ; Figure out where, what and how to install.
 NOT_SILENT:
 Call CheckWindowsVersion		; warn if on Windows 98/ME
 Call CheckIfAdministrator		; Make sure the user can install/uninstall
@@ -944,7 +946,7 @@ Call RemoveOldReleaseNotes
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; If this is a silent update, we don't need to re-create these shortcuts or registry entries.
-IfSilent POST_INSTALL
+;IfSilent POST_INSTALL
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Shortcuts in start menu
@@ -962,14 +964,17 @@ CreateShortCut	"$SMPROGRAMS\$INSTSHORTCUT\$INSTSHORTCUT Museum Spanish.lnk" \
 				"$INSTDIR\$INSTEXE" "$INSTFLAGS -simple -spanish"
 !endif
 
-;WriteINIStr		"$SMPROGRAMS\$INSTSHORTCUT\SL Create Trial Account.url" \
-;				"InternetShortcut" "URL" \
-;				"http://www.secondlife.com/registration/"
+WriteINIStr		"$SMPROGRAMS\$INSTSHORTCUT\Launch Astra Viewer Website.url" \
+				"InternetShortcut" "URL" \
+				"http://www.astraviewer.com/"
+WriteINIStr		"$SMPROGRAMS\$INSTSHORTCUT\Launch Astra Grid Website.url" \
+				"InternetShortcut" "URL" \
+				"http://www.astragrid.com/"
 ;WriteINIStr		"$SMPROGRAMS\$INSTSHORTCUT\SL Your Account.url" \
 ;				"InternetShortcut" "URL" \
 ;				"http://www.secondlife.com/account/"
-CreateShortCut	"$SMPROGRAMS\$INSTSHORTCUT\Scripting Language Help.lnk" \
-				"$INSTDIR\lsl_guide.html"
+;CreateShortCut	"$SMPROGRAMS\$INSTSHORTCUT\Scripting Language Help.lnk" \
+;				"$INSTDIR\lsl_guide.html"
 CreateShortCut	"$SMPROGRAMS\$INSTSHORTCUT\Uninstall $INSTSHORTCUT.lnk" \
 				'"$INSTDIR\uninst.exe"' '/P="$INSTPROG"'
 
@@ -1002,6 +1007,8 @@ WriteRegStr HKEY_LOCAL_MACHINE "SOFTWARE\Linden Research, Inc.\$INSTPROG" "Exe" 
 WriteRegStr HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninstall\$INSTPROG" "DisplayName" "$INSTPROG (remove only)"
 WriteRegStr HKEY_LOCAL_MACHINE "Software\Microsoft\Windows\CurrentVersion\Uninstall\$INSTPROG" "UninstallString" '"$INSTDIR\uninst.exe" /P="$INSTPROG"'
 
+IfSilent 0 +2
+WriteRegStr HKEY_LOCAL_MACHINE "SOFTWARE\Linden Research, Inc.\$INSTPROG" "InstallerLanguage" "1033"
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ; Write URL registry info
 WriteRegStr HKEY_CLASSES_ROOT "${URLNAME}" "(default)" "URL:Second Life"
