@@ -122,7 +122,7 @@
             <key>md5sum</key>
             <string>f4c8d035de4b09e7a3401d22c10e0ca3</string>
             <key>url</key>
-            <uri>https://github.com/downloads/NickyPerian/imprudence/apr_suite-1.4.2-windows-20110217Imp.tar.bz2</uri>
+            <uri>http://download.kokuaviewer.org/files/libs/apr_suite-1.4.2-windows-20110217Imp.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -230,7 +230,7 @@
             <key>md5sum</key>
             <string>17f89b854959b4d728be832d9c8184e4</string>
             <key>url</key>
-            <uri>https://github.com/downloads/NickyPerian/imprudence/boost_1_45_VC100_libs_inc_patch4073.tar.bz2</uri>
+            <uri>http://download.kokuaviewer.org/files/libs/boost_1_45_VC100_libs_inc_patch4073.tar.bz2</uri>
           </map>
         </map>
       </map>
@@ -473,7 +473,7 @@
 						<key>md5sum</key>
 						<string>2d21dd5bb019f58a96b72acf6ee42ae2</string>
 						<key>url</key>
-						<uri>https://github.com/downloads/NickyPerian/imprudence/freeglut-2.6.0-windows-20110214Imp.tar.bz2</uri>
+						<uri>http://download.kokuaviewer.org/files/libs/freeglut-2.6.0-windows-20110214Imp.tar.bz2</uri>
 					</map>
 				</map>
 			</map>
@@ -606,7 +606,7 @@
 					<key>md5sum</key>
 					<string>e026920d08611c57ba625735f3c1989e</string>
 					<key>url</key>
-					<uri>https://github.com/downloads/NickyPerian/imprudence/glui-2.36-windows-20110214Imp.tar.bz2</uri>
+					<uri>http://download.kokuaviewer.org/files/libs/glui-2.36-windows-20110214Imp.tar.bz2</uri>
 				</map>
 			</map>
 		</map>
@@ -836,7 +836,7 @@ cairo: Copyright © 2002 University of Southern California, Copyright © 2005 Re
 					<key>md5sum</key>
 					<string>3ba7af1b2c04791cc39b4c23b853a488</string>
 					<key>url</key>
-					<uri>https://github.com/downloads/NickyPerian/imprudence/jsonlib_VC100_libs_inc.tar.bz2</uri>
+					<uri>http://download.kokuaviewer.org/files/libs/jsonlib_VC100_libs_inc.tar.bz2</uri>
 				</map>
 			</map>
 		</map>
@@ -1044,7 +1044,7 @@ Portions copyright (C) 1997 - 2002, Makoto Matsumoto and Takuji Nishimura
             <key>md5sum</key>
             <string>df1a432001934f537c4f3385dd3436da</string>
             <key>url</key>
-            <uri>https://github.com/downloads/NickyPerian/imprudence/llqtwebkit-windows-qt4.7.1-20110117.tar.bz2</uri>
+            <uri>http://download.kokuaviewer.org/files/libs/llqtwebkit-windows-qt4.7.1-20110117.tar.bz2</uri>
           </map>
         </map>
       </map>
