@@ -4,9 +4,11 @@ project(llmath)
 
 include(00-Common)
 include(LLCommon)
+include(LLXML)
 
 include_directories(
     ${LLCOMMON_INCLUDE_DIRS}
+    ${LLXML_INCLUDE_DIRS}
     )
 
 set(llmath_SOURCE_FILES

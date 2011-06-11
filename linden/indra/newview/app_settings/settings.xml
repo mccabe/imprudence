@@ -1004,6 +1004,17 @@
     <key>Value</key>
     <integer>1</integer>
   </map>
+  <key>SculptMaxArea</key>
+  <map>
+    <key>Comment</key>
+    <string>Sculpties with an area larger than this are rendered as spheres.</string>
+    <key>Persist</key>
+    <integer>1</integer>
+    <key>Type</key>
+    <string>F32</string>
+    <key>Value</key>
+    <string>128.0</string>
+  </map>
   <key>ShowLookAtNames</key>
   <map>
     <key>Comment</key>

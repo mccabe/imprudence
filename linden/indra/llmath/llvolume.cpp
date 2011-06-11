@@ -47,6 +47,9 @@
 #include "llvolume.h"
 #include "llstl.h"
 
+#include "llcontrol.h"
+#include "..\newview\llviewercontrol.h"
+
 #define DEBUG_SILHOUETTE_BINORMALS 0
 #define DEBUG_SILHOUETTE_NORMALS 0 // TomY: Use this to display normals using the silhouette
 #define DEBUG_SILHOUETTE_EDGE_MAP 0 // DaveP: Use this to display edge map using the silhouette
@@ -2237,7 +2240,9 @@ void LLVolume::sculpt(U16 sculpt_width, U16 sculpt_height, S8 sculpt_components,
 	{
 		sculptGenerateMapVertices(sculpt_width, sculpt_height, sculpt_components, sculpt_data, sculpt_type);
 		
-		if (sculptGetSurfaceArea() < SCULPT_MIN_AREA)
+		F32 area = sculptGetSurfaceArea();
+		static F32 *sSculptMaxArea = rebind_llcontrol<F32>("SculptMaxArea", &gSavedSettings, true);
+		if (area < SCULPT_MIN_AREA || area > *sSculptMaxArea) // Large areas are used to grief -- MC
 		{
 			data_is_empty = TRUE;
 		}
