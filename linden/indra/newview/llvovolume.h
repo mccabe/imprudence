@@ -105,7 +105,7 @@ public:
 	/*virtual*/ BOOL	isHUDAttachment() const;
 
 				void	generateSilhouette(LLSelectNode* nodep, const LLVector3& view_point);
-	/*virtual*/	void	setParent(LLViewerObject* parent);
+	/*virtual*/	BOOL	setParent(LLViewerObject* parent);
 				S32		getLOD() const							{ return mLOD; }
 	const LLVector3		getPivotPositionAgent() const;
 	const LLMatrix4&	getRelativeXform() const				{ return mRelativeXform; }
@@ -171,7 +171,6 @@ public:
 				void	setTexture(const S32 face);
 				S32     getIndexInTex() const {return mIndexInTex ;}
 	/*virtual*/ BOOL	setVolume(const LLVolumeParams &volume_params, const S32 detail, bool unique_volume = false);
-				void	updateSculptTexture();
 				void    setIndexInTex(S32 index) { mIndexInTex = index ;}
 				void	sculpt();
 				void	updateRelativeXform();
@@ -233,6 +232,7 @@ private:
 	LLFrameTimer mTextureUpdateTimer;
 	S32			mLOD;
 	BOOL		mLODChanged;
+	S32         mSculptLevel;
 	BOOL		mSculptChanged;
 	LLMatrix4	mRelativeXform;
 	LLMatrix3	mRelativeXformInvTrans;
